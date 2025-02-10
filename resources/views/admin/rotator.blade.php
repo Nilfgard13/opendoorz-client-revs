@@ -9,10 +9,11 @@
                         <div class="mb-3 mb-sm-0">
                             <h5 class="card-title fw-semibold">Admin Rotator Management</h5>
                         </div>
-                        <div>
-                            <form method="GET" action="#">
-                                <input type="text" name="search" class="form-control" placeholder="Cari admin...">
+                        <div class="d-flex align-items-center">
+                            <form method="GET" action="#" class="me-2">
+                                <input type="text" name="search" class="form-control" placeholder="Cari User...">
                             </form>
+                            <button type="button" class="btn btn-outline-success">Add</button>
                         </div>
                     </div>
                     <table class="table">
@@ -32,6 +33,10 @@
                                 <td>Mark</td>
                                 <td>Otto</td>
                                 <td>@mdo</td>
+                                <td>@mdo</td>
+                                <td><button type="button" class="btn btn-outline-success m-1">Add</button><button
+                                        type="button" class="btn btn-outline-secondary m-1">Edit</button><button
+                                        type="button" class="btn btn-outline-danger m-1">Delete</button></td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>

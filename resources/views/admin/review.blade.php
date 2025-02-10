@@ -33,6 +33,10 @@
                                 <td>Mark</td>
                                 <td>Otto</td>
                                 <td>@mdo</td>
+                                <td>@mdo</td>
+                                <td><button type="button" class="btn btn-outline-success m-1">Add</button><button
+                                        type="button" class="btn btn-outline-secondary m-1">Edit</button><button
+                                        type="button" class="btn btn-outline-danger m-1">Delete</button></td>
                             </tr>
                             <tr>
                                 <th scope="row">2</th>

@@ -62,6 +62,14 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link" href="/category-admin" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-category"></i>
+                                </span>
+                                <span class="hide-menu">Category Management</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-brand-whatsapp"></i>
@@ -77,14 +85,14 @@
                                 <span class="hide-menu">Blog Management</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="/review-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-message"></i>
                                 </span>
                                 <span class="hide-menu">Review Management</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-small-cap">
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">AUTH</span>
@@ -125,7 +133,8 @@
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-
+                            <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/"
+                                target="_blank" class="btn btn-primary">Username & role</a>
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -160,9 +169,9 @@
                 </nav>
             </header>
             <!--  Content -->
-            
+
             <div class="container-fluid">
-                
+
                 {{ $slot }}
 
                 <div class="py-6 px-6 text-center">

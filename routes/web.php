@@ -32,6 +32,10 @@ Route::get('/property-admin', function () {
     return view('admin/property', ['title' => 'Property Admin']);
 });
 
+Route::get('/category-admin', function () {
+    return view('admin/category', ['title' => 'Property Admin']);
+});
+
 Route::get('/admin-admin', function () {
     return view('admin/rotator', ['title' => 'Rotator Admin']);
 });
