@@ -4,19 +4,19 @@ use Illuminate\Support\Facades\Route;
 
 //user
 Route::get('/', function () {
-    return view('user/home');
+    return view('user/home', ['title' => 'Home Page']);
 });
 
 Route::get('/property', function () {
-    return view('user/property');
+    return view('user/property', ['title' => 'Property']);
 });
 
 Route::get('/details-property', function () {
-    return view('user/details-property');
+    return view('user/details-property', ['title' => 'Property Details']);
 });
 
 Route::get('/contact', function () {
-    return view('user/contact');
+    return view('user/contact', ['title' => 'Contact']);
 });
 
 //admin

@@ -13,7 +13,7 @@
                             <form method="GET" action="#" class="me-2">
                                 <input type="text" name="search" class="form-control" placeholder="Cari User...">
                             </form>
-                            <button type="button" class="btn btn-outline-success">Add</button>
+                            <button type="button" class="btn btn-primary m-1">Search</button>
                         </div>
                     </div>
                     <table class="table">

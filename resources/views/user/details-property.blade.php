@@ -1,36 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <title>Villa Agency - Property Detail Page</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="user/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="user/assets/css/templatemo-villa-agency.css">
-    <link rel="stylesheet" href="user/assets/css/owl.css">
-    <link rel="stylesheet" href="user/assets/css/animate.css">
-    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-    <!--
-
-TemplateMo 591 villa agency
-
-https://templatemo.com/tm-591-villa-agency
-
--->
-</head>
-
-<body>
-
+<x-layout_user>
+    <x-slot:title>{{ $title }}</x-slot:title>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -73,7 +42,7 @@ https://templatemo.com/tm-591-villa-agency
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="logo">
-                            <h1>Villa</h1>
+                            <h1>Opendoorz</h1>
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
@@ -169,13 +138,12 @@ https://templatemo.com/tm-591-villa-agency
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Why is Villa the best ?
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     Dolor <strong>almesit amet</strong>, consectetur adipiscing elit, sed doesn't
                                     eiusmod tempor kinfolk tonx seitan crucifix 3 wolf moon bicycle rights keffiyeh
@@ -199,7 +167,8 @@ https://templatemo.com/tm-591-villa-agency
                                 <h4>Contract<br><span>Contract Ready</span></h4>
                             </li>
                             <li>
-                                <img src="user/assets/images/online-payment.png" alt="" style="max-width: 52px;">
+                                <img src="user/assets/images/online-payment.png" alt=""
+                                    style="max-width: 52px;">
                                 <h4>Payment<br><span>Payment Process</span></h4>
                             </li>
                             <li>
@@ -345,26 +314,4 @@ https://templatemo.com/tm-591-villa-agency
             </div>
         </div>
     </div>
-
-    <footer class="footer-no-gap">
-        <div class="container">
-            <div class="col-lg-12">
-                <p>Copyright © 2048 Villa Agency Co., Ltd. All rights reserved.
-
-                    Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="user/assets/js/isotope.min.js"></script>
-    <script src="user/assets/js/owl-carousel.js"></script>
-    <script src="user/assets/js/counter.js"></script>
-    <script src="user/assets/js/custom.js"></script>
-
-</body>
-
-</html>
+</x-layout_user>

@@ -7,13 +7,13 @@
                 <div class="card-body">
                     <div class="d-sm-flex d-block align-items-center justify-content-between mb-3">
                         <div class="mb-3 mb-sm-0">
-                            <h5 class="card-title fw-semibold">Property Content Management</h5>
+                            <h5 class="card-title fw-semibold">Category Content Management</h5>
                         </div>
                         <div class="d-flex align-items-center">
                             <form method="GET" action="#" class="me-2">
                                 <input type="text" name="search" class="form-control" placeholder="Cari User...">
                             </form>
-                            <button type="button" class="btn btn-outline-success">Add</button>
+                            <button type="button" class="btn btn-primary m-1">Search</button>
                         </div>
                     </div>
                     <table class="table">
