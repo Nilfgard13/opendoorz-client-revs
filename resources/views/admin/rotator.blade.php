@@ -54,6 +54,53 @@
                 </div>
             </div>
         </div>
+
+        <div class="card mb-0">
+            <div class="card-body">
+                <form>
+
+                    <legend>Rotator Link</legend>
+
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="Contoh teks yang tidak bisa diedit" disabled>
+                            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">
+                                <i class="fa fa-copy"></i> Salin
+                            </button>
+                        </div>
+                        {{-- <label for="disabledTextInput" class="form-label"></label> --}}
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Test</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 
+    <script>
+        function copyToClipboard() {
+            // Get the text field
+            var copyText = document.getElementById("disabledTextInput");
+
+            // Enable the input temporarily to copy
+            copyText.disabled = false;
+
+            // Select the text
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text
+            navigator.clipboard.writeText(copyText.value);
+
+            // Disable the input again
+            copyText.disabled = true;
+
+            // Optional: Add visual feedback
+            alert("Text berhasil disalin!");
+        }
+    </script>
 </x-layout_admin>

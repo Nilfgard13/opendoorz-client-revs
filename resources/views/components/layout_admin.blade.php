@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{-- <title>Modernize Free</title> --}}
     <x-title>{{ $title }}</x-title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="shortcut icon" type="image/png" href="admin/assets/images/logos/Artboard 11 copy 4@300x.png" />
     <link rel="stylesheet" href="admin/assets/css/styles.min.css" />
 </head>

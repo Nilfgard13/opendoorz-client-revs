@@ -51,7 +51,7 @@
                             <li><a href="/property">Properties</a></li>
                             <li><a href="/details-property">Property Details</a></li>
                             <li><a href="/contact" class="active">Contact Us</a></li>
-                            <li><a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>

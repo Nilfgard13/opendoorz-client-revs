@@ -51,7 +51,7 @@
                             <li><a href="/property">Properties</a></li>
                             <li><a href="/details-property" class="active">Property Details</a></li>
                             <li><a href="/contact">Contact Us</a></li>
-                            <li><a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -239,7 +239,7 @@
                                                 mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella
                                                 venmo after messenger poutine next level humblebrag swag franzen.</p>
                                             <div class="icon-button">
-                                                <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
+                                                <a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a>
                                             </div>
                                         </div>
                                     </div>
@@ -269,7 +269,7 @@
                                                 mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella
                                                 venmo after messenger poutine next level humblebrag swag franzen.</p>
                                             <div class="icon-button">
-                                                <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
+                                                <a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a>
                                             </div>
                                         </div>
                                     </div>
@@ -302,7 +302,7 @@
                                                 after messenger poutine next level humblebrag swag franzen.
                                             </p>
                                             <div class="icon-button">
-                                                <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
+                                                <a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a>
                                             </div>
                                         </div>
                                     </div>

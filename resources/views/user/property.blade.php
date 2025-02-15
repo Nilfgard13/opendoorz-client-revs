@@ -51,7 +51,7 @@
                             <li><a href="/property" class="active">Properties</a></li>
                             <li><a href="/details-property">Property Details</a></li>
                             <li><a href="/contact">Contact Us</a></li>
-                            <li><a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -107,7 +107,7 @@
                             <li>Parking: <span>6 spots</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                             <li>Parking: <span>8 spots</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                             <li>Parking: <span>10 spots</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                             <li>Parking: <span>2 cars</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                             <li>Parking: <span>2 cars</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -202,7 +202,7 @@
                             <li>Parking: <span>3 cars</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                             <li>Parking: <span>12 spots</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                             <li>Parking: <span>14 spots</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
                             <li>Parking: <span>10 spots</span></li>
                         </ul>
                         <div class="main-button">
-                            <a href="property-details.html">Schedule a visit</a>
+                            <a href="property-details.html">Contact Admin</a>
                         </div>
                     </div>
                 </div>

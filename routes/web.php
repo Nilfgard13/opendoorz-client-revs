@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 //user
 Route::get('/', function () {
@@ -24,9 +25,11 @@ Route::get('/home-admin', function () {
     return view('admin/home', ['title' => 'Dashboard']);
 });
 
-Route::get('/user-admin', function () {
-    return view('admin/user', ['title' => 'User Admin']);
-});
+Route::get('/user-admin', [UserController::class, 'index'])->name('admin.user');
+Route::post('/user-create', [UserController::class, 'store'])->name('users.store');
+Route::put('/user-update/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/user-delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/users-search', [UserController::class, 'show'])->name('users.show');
 
 Route::get('/property-admin', function () {
     return view('admin/property', ['title' => 'Property Admin']);

@@ -14,6 +14,7 @@
     <link href="user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
+    <link rel="shortcut icon" type="image/png" href="admin/assets/images/logos/Artboard 11 copy 4@300x.png" />
     <link rel="stylesheet" href="user/assets/css/fontawesome.css">
     <link rel="stylesheet" href="user/assets/css/templatemo-villa-agency.css">
     <link rel="stylesheet" href="user/assets/css/owl.css">
