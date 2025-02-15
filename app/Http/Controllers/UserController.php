@@ -8,10 +8,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        $title = 'User Admin'; // Tambahkan variabel title
+        $search = $request->input('search');
+
+        // Jika ada input pencarian, filter data
+        $users = User::when($search, function ($query, $search) {
+            return $query->where('username', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%")
+                ->orWhere('role', 'LIKE', "%{$search}%");
+        })->get();
+
+        $title = 'User Admin';
 
         return view('admin.user', compact('users', 'title'));
     }
@@ -33,22 +41,21 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.user')->with('success', 'User created successfully');
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     // Get a single user
-    public function show(Request $request)
-    {
-        $search = $request->input('search');
+    // public function show(Request $request)
+    // {
+    //     $search = $request->input('search');
 
-        $users = User::where('username', 'LIKE', "%{$search}%")
-            ->orWhere('email', 'LIKE', "%{$search}%")
-            ->orWhere('role', 'LIKE', "%{$search}%")
-            ->get();
+    //     $users = User::where('username', 'LIKE', "%{$search}%")
+    //         ->orWhere('email', 'LIKE', "%{$search}%")
+    //         ->orWhere('role', 'LIKE', "%{$search}%")
+    //         ->get();
 
-        return view('admin.user', ['title' => 'User Admin'], compact('users'));
-    }
-
+    //     return view('admin.user', ['title' => 'User Admin'], compact('users'));
+    // }
 
     // Update a user
     public function update(Request $request, $id)
@@ -75,7 +82,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.user')->with('success', 'User updated successfully');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy($id)
@@ -86,6 +93,6 @@ class UserController extends Controller
         }
 
         $user->delete();
-        return redirect()->route('admin.user')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }

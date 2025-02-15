@@ -9,5 +9,5 @@ class Nomor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'nomor', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'nomor'];
 }

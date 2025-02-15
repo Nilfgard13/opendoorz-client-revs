@@ -8,79 +8,64 @@ use Illuminate\Http\Request;
 class NomorController extends Controller
 {
     // Menampilkan daftar nomor
-    public function index()
+    public function index(Request $request)
     {
-        $nomors = Nomor::all();
-        return view('dashboard', ['title' => 'ORS | Rotator Management', 'nomors' => $nomors]);
-    }
+        $search = $request->input('search');
 
-    // Menampilkan form untuk membuat nomor baru
-    public function create()
-    {
-        return view('nomors.create');
+        $nomors = Nomor::when($search, function ($query, $search) {
+            return $query->where('username', 'LIKE', "%{$search}%")
+                ->orWhere('nomor', 'LIKE', "%{$search}%");
+        })->get();
+
+        $title = 'Rotator Admin';
+
+        return view('admin.rotator', compact('nomors', 'title'));
     }
 
     public function store(Request $request)
     {
-        // Validasi data input dari form
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'nomor' => 'required|numeric',
+        ]);
+        // dd($request);
+        Nomor::create([
+            'username' => $request->username,
+            'nomor' => $request->nomor,
+        ]);
+
+        return redirect()->route('rotator.index')->with('success', 'User created successfully');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $nomor = Nomor::find($id);
+        if (!$nomor) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        $request->validate([
+            'username' => 'required|string|max:255',
             'nomor' => 'required|numeric',
         ]);
 
-        // Buat entri baru di database
-        $nomor = new Nomor();
-        $nomor->name = $validatedData['name'];
-        $nomor->nomor = $validatedData['nomor'];
+        $nomor->username = $request->username;
+        $nomor->nomor = $request->nomor;
+
         $nomor->save();
 
-        // Redirect ke halaman daftar dengan pesan sukses
-        return redirect()->route('nomors.index')->with('success', 'Nomor added successfully.');
+        return redirect()->route('rotator.index')->with('success', 'User updated successfully');
     }
 
-    // Controller Method for Multi-Update
-    public function multiUpdate(Request $request)
+    public function destroy($id)
     {
-        $ids = $request->input('selected_ids', []);
-        $names = $request->input('name', []);
-        $nomors = $request->input('nomor', []);
-
-        foreach ($ids as $id) {
-            $nomor = Nomor::find($id);
-            if ($nomor) {
-                $nomor->name = $names[$id] ?? $nomor->name;
-                $nomor->nomor = $nomors[$id] ?? $nomor->nomor;
-                $nomor->save();
-            }
+        $nomor = Nomor::find($id);
+        if (!$nomor) {
+            return redirect()->back()->with('error', 'User not found');
         }
 
-        return redirect()->route('nomors.index')->with('success', 'Nomors updated successfully.');
-    }
-
-    public function multiDelete(Request $request)
-    {
-        $ids = explode(',', $request->input('ids'));
-
-        Nomor::whereIn('id', $ids)->delete();
-
-        return redirect()->route('nomors.index')->with('success', 'Selected items deleted successfully.');
-    }
-
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $results = Nomor::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('nomor', 'LIKE', "%{$query}%")
-            ->get();
-
-        $nomors = $results; // Or you can load all nomors if $results is empty
-
-        return view('dashboard', [
-            'title' => 'ORS | Rotator Management',
-            'nomors' => $nomors,
-            'results' => $results,
-            'query' => $query
-        ]);
+        $nomor->delete();
+        return redirect()->route('rotator.index')->with('success', 'User deleted successfully');
     }
 
     public function generateLink()
@@ -111,12 +96,8 @@ class NomorController extends Controller
 
         // Generate the WhatsApp URL
         $url = "https://api.whatsapp.com/send?phone=" . $adminNumber . "&text=" . urlencode($text);
-
-        // Save the generated URL to the session or pass it via a query parameter, if needed
         session()->flash('generated_url', $url);
 
-        // Redirect to the route that displays the list of `nomors` with a success message
-        // return redirect($url);
         return $url;
     }
 

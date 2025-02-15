@@ -3,6 +3,13 @@
 
     <!--  Row 1 -->
     <div class="row">
+        <!-- Menampilkan pesan sukses -->
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
@@ -15,7 +22,7 @@
                                 <input type="text" name="search" class="form-control" placeholder="Cari User...">
                             </form>
                             <button type="button" class="btn btn-primary m-1">Search</button> --}}
-                            <form action="{{ route('users.show') }}" method="GET" class="mb-3">
+                            <form action="{{ route('users.index') }}" method="GET" class="mb-3">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control" placeholder="Cari user..."
                                         value="{{ request('search') }}">
@@ -31,6 +38,9 @@
                         data-bs-target="#formModal1">
                         Add
                     </button>
+                    <a href="{{ route('users.index') }}" class="btn btn-outline-primary m-1">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </a>
 
                     <table class="table">
                         <thead>
@@ -172,7 +182,6 @@
                                 <select class="form-control" id="editRole" name="role">
                                     <option value="super admin">Super Admin</option>
                                     <option value="admin">Admin</option>
-                                    <option value="user">User</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -247,7 +256,7 @@
 
                     Swal.fire({
                         title: "Hapus User?",
-                        text: `Apakah Anda yakin ingin menghapus user dengan ID ${userId}?`,
+                        text: `Apakah Anda yakin ingin menghapus user ini?`,
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#d33",
@@ -265,12 +274,5 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Menampilkan pesan sukses -->
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
 </x-layout_admin>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('nomors', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 125);
+            $table->string('username', 125);
             $table->string('nomor', 50); // Menggunakan string dengan panjang 16
             $table->timestamps();
         });
