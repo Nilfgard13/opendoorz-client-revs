@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <a href="{{ route('rotator.showLink') }}" class="btn btn-primary">Test</a>
+                        <a href="{{ route('rotator.showLink') }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Test</a>
                     </div>
                 </form>
             </div>

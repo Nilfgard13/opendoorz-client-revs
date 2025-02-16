@@ -15,10 +15,10 @@
                 <div class="card-body">
                     <div class="d-sm-flex d-block align-items-center justify-content-between mb-3">
                         <div class="mb-3 mb-sm-0">
-                            <h5 class="card-title fw-semibold">Category Location Management</h5>
+                            <h5 class="card-title fw-semibold">Category Management</h5>
                         </div>
                         <div class="d-flex align-items-center">
-                            <form action="{{ route('categorytype.index') }}" method="GET" class="mb-3">
+                            <form action="{{ route('categorylocation.index') }}" method="GET" class="mb-3">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control" placeholder="Cari user..."
                                         value="{{ request('search') }}">
@@ -33,7 +33,7 @@
                         data-bs-target="#formModal1">
                         Add
                     </button>
-                    <a href="{{ route('categorytype.index') }}" class="btn btn-outline-primary m-1">
+                    <a href="{{ route('categorylocation.index') }}" class="btn btn-outline-primary m-1">
                         <i class="bi bi-arrow-clockwise"></i> Refresh
                     </a>
                     <table class="table">
@@ -43,23 +43,23 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Description</th>
                                 {{-- <th scope="col">Created at</th>
-                                <th scope="col">Updated at</th> --}}
+                            <th scope="col">Updated at</th> --}}
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($category->isEmpty())
+                            @if ($categorylocation->isEmpty())
                                 <tr>
                                     <td colspan="7" class="text-center text-muted">❌ Tidak ada data ditemukan</td>
                                 </tr>
                             @else
-                                @foreach ($category as $index => $user)
+                                @foreach ($categorylocation as $index => $user)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->description }}</td>
                                         {{-- <td>{{ $user->created_at }}</td>
-                                        <td>{{ $user->updated_at }}</td> --}}
+                                    <td>{{ $user->updated_at }}</td> --}}
                                         <td>
                                             <button type="button" class="btn btn-outline-secondary m-1 edit-btn"
                                                 data-bs-toggle="modal" data-bs-target="#formModal2"
@@ -68,7 +68,7 @@
                                                 Edit
                                             </button>
 
-                                            <form action="{{ route('categorytype.destroy', $user->id) }}"
+                                            <form action="{{ route('categorylocation.destroy', $user->id) }}"
                                                 method="POST" class="d-inline delete-form">
                                                 @csrf
                                                 @method('DELETE')
@@ -96,7 +96,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('categorytype.store') }}" method="POST">
+                        <form action="{{ route('categorylocation.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
@@ -167,7 +167,8 @@
                     document.getElementById("editDescription").value = description;
 
                     // Ubah action form agar sesuai dengan user yang diedit
-                    document.getElementById("editUserForm").action = `/category-update/${userId}`;
+                    document.getElementById("editUserForm").action =
+                        `/category-location-update/${userId}`;
                 });
             });
         });

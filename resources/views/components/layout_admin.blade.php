@@ -67,7 +67,15 @@
                                 <span>
                                     <i class="ti ti-category"></i>
                                 </span>
-                                <span class="hide-menu">Category Management</span>
+                                <span class="hide-menu">Type Management</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/category-location-admin" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-location"></i>
+                                </span>
+                                <span class="hide-menu">Location Management</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -78,22 +86,22 @@
                                 <span class="hide-menu">Admin Management</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="/blog-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-article"></i>
                                 </span>
                                 <span class="hide-menu">Blog Management</span>
                             </a>
-                        </li>
-                        {{-- <li class="sidebar-item">
+                        </li> --}}
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/review-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-message"></i>
                                 </span>
                                 <span class="hide-menu">Review Management</span>
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="nav-small-cap">
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">AUTH</span>
@@ -126,10 +134,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            {{-- <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
                                 <i class="ti ti-bell-ringing"></i>
                                 <div class="notification bg-primary rounded-circle"></div>
-                            </a> --}}
+                            </a>
                         </li>
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
