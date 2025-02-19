@@ -25,16 +25,30 @@
                         data-bs-target="#formModal1">
                         Add
                     </button> --}}
-                    <a class="btn btn-outline-success m-1" href="\form-property">Add</a>
-                    <a href="{{ route('property.index') }}" class="btn btn-outline-primary m-1">
-                        <i class="bi bi-arrow-clockwise"></i> Refresh
-                    </a>
+                    <div class="d-flex gap-3 mb-4">
+                        <a class="btn btn-outline-success m-1" href="\form-property">Add</a>
+                        <a href="{{ route('property.index') }}" class="btn btn-outline-primary m-1">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </a>
+                        <a href="\category-admin"
+                            class="btn btn-outline-warning d-flex align-items-center px-4 py-2 rounded-pill">
+                            <i class="ti ti-category me-2"></i>
+                            <span>Type Property</span>
+                        </a>
+
+                        <a href="\category-location-admin"
+                            class="btn btn-outline-warning d-flex align-items-center px-4 py-2 rounded-pill">
+                            <i class="ti ti-location me-2"></i>
+                            <span>Location Property</span>
+                        </a>
+                    </div>
+
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Image</th>
+                                {{-- <th scope="col">Image</th> --}}
                                 <th scope="col">Price</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Type</th>
@@ -56,7 +70,7 @@
                                             $images = json_decode($user->images, true);
                                         @endphp
 
-                                        <td>
+                                        {{-- <td>
                                             @if ($images)
                                                 @foreach ($images as $image)
                                                     <img src="{{ asset('storage/' . $image) }}" alt="Property Image"
@@ -65,7 +79,7 @@
                                             @else
                                                 <span>No images available</span>
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>${{ number_format($user->price, 2) }}</td>
                                         <td>{{ $user->categoryLocation->name }}</td>
                                         <td>{{ $user->categoryType->name }}</td>
@@ -126,6 +140,17 @@
                                                 <div class="mt-4 pt-3 border-top">
                                                     <h5 class="mb-2 text-primary">Address</h5>
                                                     <p class="mb-0">{{ $user->address }}</p>
+                                                </div>
+                                                <div class="mt-4 pt-3 border-top">
+                                                    <h5 class="mb-2 text-primary">Images</h5>
+                                                    @if ($images)
+                                                        @foreach ($images as $image)
+                                                            <img src="{{ asset('storage/' . $image) }}"
+                                                                alt="Property Image" width="100" class="m-1">
+                                                        @endforeach
+                                                    @else
+                                                        <span>No images available</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>

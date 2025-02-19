@@ -29,6 +29,9 @@
                     </div>
                     <br>
                     <br>
+                    <a href="/property-admin" class="btn btn-warning m-1">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
                     <button type="button" class="btn btn-outline-success m-1" data-bs-toggle="modal"
                         data-bs-target="#formModal1">
                         Add

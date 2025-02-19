@@ -150,26 +150,33 @@
                                     <label for="status" class="form-label">Status</label>
                                     <select class="form-select @error('status') is-invalid @enderror" id="status"
                                         name="status" required>
-                                        <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Available
+                                        <option value="available"
+                                            {{ old('status') == 'available' ? 'selected' : '' }}>Available</option>
+                                        <option value="sold" {{ old('status') == 'sold' ? 'selected' : '' }}>Sold
                                         </option>
-                                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Sold</option>
-                                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Reserved</option>
-                                        <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Pending</option>
+                                        <option value="reserved" {{ old('status') == 'reserved' ? 'selected' : '' }}>
+                                            Reserved</option>
+                                        <option value="on progress"
+                                            {{ old('status') == 'on progress' ? 'selected' : '' }}>On Progress</option>
                                     </select>
                                     @error('status')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="images" class="form-label">Property Images</label>
-                                    <input type="file"
-                                        class="form-control @error('images.*') is-invalid @enderror" id="images"
-                                        name="images[]" accept="image/*" multiple>
+                                <div class="mb-4">
+                                    <label for="images" class="form-label fw-semibold mb-2">Property Images</label>
+                                    <div class="input-group">
+                                        <input type="file"
+                                            class="form-control @error('images.*') is-invalid @enderror"
+                                            id="images" name="images[]" accept="image/*" multiple>
+                                        {{-- <label class="input-group-text" for="images">Browse</label> --}}
+                                    </div>
                                     @error('images.*')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
-                                    <div id="imagePreview" class="mt-2 d-flex flex-wrap gap-2"></div>
+
+                                    <div id="imagePreview" class="mt-3 row g-3"></div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary w-100">Add Property</button>
@@ -180,6 +187,92 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const imageInput = document.getElementById("images");
+            const imagePreview = document.getElementById("imagePreview");
+            let imageFiles = [];
+
+            imageInput.addEventListener("change", function() {
+                imageFiles = Array.from(imageInput.files);
+                updatePreview();
+            });
+
+            function updatePreview() {
+                imagePreview.innerHTML = "";
+
+                if (imageFiles.length === 0) {
+                    imagePreview.innerHTML = `
+                        <div class="col-12">
+                            <div class="text-center p-3 border rounded bg-light">
+                                <p class="text-muted mb-0">No images selected</p>
+                            </div>
+                        </div>`;
+                    return;
+                }
+
+                imageFiles.forEach((file, index) => {
+                    if (!file.type.startsWith("image/")) return;
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const div = document.createElement("div");
+                        div.className = "col-6 col-sm-4 col-md-3 col-lg-2";
+
+                        div.innerHTML = `
+                            <div class="card h-100 position-relative image-card">
+                                <div class="ratio ratio-1x1">
+                                    <img src="${e.target.result}" 
+                                        class="card-img-top object-fit-cover" 
+                                        alt="Preview">
+                                </div>
+                                <button type="button" 
+                                    class="btn-close position-absolute top-0 end-0 m-2 bg-white rounded-circle" 
+                                    onclick="removeImage(${index})"
+                                    style="width: 20px; height: 20px;">
+                                </button>
+                                <div class="card-footer p-2 bg-light">
+                                    <small class="text-muted text-truncate d-block">${file.name}</small>
+                                </div>
+                            </div>
+                        `;
+                        imagePreview.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            window.removeImage = function(index) {
+                imageFiles.splice(index, 1);
+                const dt = new DataTransfer();
+                imageFiles.forEach(file => dt.items.add(file));
+                imageInput.files = dt.files;
+                updatePreview();
+            };
+
+            // Add some CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                .image-card {
+                    transition: all 0.3s ease;
+                    border: 1px solid rgba(0,0,0,.125);
+                }
+                .image-card:hover {
+                    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+                    transform: translateY(-2px);
+                }
+                .btn-close {
+                    opacity: 0.8;
+                    transition: opacity 0.2s ease;
+                }
+                .btn-close:hover {
+                    opacity: 1;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
 
     <script>
         function previewImage(event) {
@@ -206,7 +299,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         document.getElementById('images').addEventListener('change', function(event) {
             const preview = document.getElementById('imagePreview');
             preview.innerHTML = '';
@@ -225,7 +318,7 @@
                 reader.readAsDataURL(file);
             });
         });
-    </script>
+    </script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

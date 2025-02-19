@@ -7,8 +7,9 @@
     {{-- <title>Modernize Free</title> --}}
     <x-title>{{ $title }}</x-title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="shortcut icon" type="image/png" href="admin/assets/images/logos/Artboard 11 copy 4@300x.png" />
-    <link rel="stylesheet" href="admin/assets/css/styles.min.css" />
+    <link rel="shortcut icon" type="image/png"
+        href="{{ asset('admin/assets/images/logos/Artboard 11 copy 4@300x.png') }}"/>
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/styles.min.css') }}" />
 </head>
 
 <body>
@@ -21,7 +22,7 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-center bg-primary p-3">
                     <a href="./index.html" class="text-nowrap logo-img">
-                        <img src="admin/assets/images/logos/Artboard 11 copy 3@300x.png" width="180" alt="Logo"
+                        <img src="{{ asset('admin/assets/images/logos/Artboard 11 copy 3@300x.png') }}" width="180" alt="Logo"
                             class="d-block mx-auto" />
                     </a>
                 </div>
@@ -62,7 +63,7 @@
                                 <span class="hide-menu">Property Management</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="/category-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-category"></i>
@@ -77,7 +78,7 @@
                                 </span>
                                 <span class="hide-menu">Location Management</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin-admin" aria-expanded="false">
                                 <span>
@@ -147,7 +148,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="admin/assets/images/profile/user-1.jpg" alt="" width="35"
+                                    <img src="{{ asset('admin/assets/images/profile/user-1.jpg') }}" alt="" width="35"
                                         height="35" class="rounded-circle">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -192,13 +193,13 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="admin/assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="admin/assets/js/sidebarmenu.js"></script>
-    <script src="admin/assets/js/app.min.js"></script>
-    <script src="admin/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="admin/assets/libs/simplebar/dist/simplebar.js"></script>
-    <script src="admin/assets/js/dashboard.js"></script>
+    <script src="{{ asset('admin/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/app.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/libs/simplebar/dist/simplebar.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/dashboard.js') }}"></script>
 </body>
 
 </html>

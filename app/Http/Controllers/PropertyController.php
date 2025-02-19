@@ -53,7 +53,7 @@ class PropertyController extends Controller
             'area' => 'required|integer|min:0',
             'floor' => 'required|integer|min:0',
             'address' => 'required|string|max:500',
-            'status' => 'required|boolean',
+            'status' => 'required|string',
             'category_type_id' => 'required|exists:category_types,id',
             'category_location_id' => 'required|exists:category_locations,id',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -113,7 +113,7 @@ class PropertyController extends Controller
             'area' => 'required|integer|min:0',
             'floor' => 'required|integer|min:0',
             'address' => 'required|string|max:500',
-            'status' => 'required|boolean',
+            'status' => 'required|string',
             'category_type_id' => 'required|exists:category_types,id',
             'category_location_id' => 'required|exists:category_locations,id',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -133,25 +133,52 @@ class PropertyController extends Controller
         $property->category_location_id = $request->category_location_id;
 
         // Handle image upload if new images are provided
-        if ($request->hasFile('images')) {
-            $imagePaths = [];
+        // if ($request->hasFile('images')) {
+        //     $imagePaths = [];
 
-            // Delete old images from storage if they exist
-            if ($property->images) {
-                $oldImages = json_decode($property->images, true);
-                foreach ($oldImages as $oldImage) {
-                    Storage::disk('public')->delete($oldImage);
-                }
+        //     // Delete old images from storage if they exist
+        //     if ($property->images) {
+        //         $oldImages = json_decode($property->images, true);
+        //         foreach ($oldImages as $oldImage) {
+        //             Storage::disk('public')->delete($oldImage);
+        //         }
+        //     }
+
+        //     // Store new images
+        //     foreach ($request->file('images') as $image) {
+        //         $path = $image->store('property_images', 'public');
+        //         $imagePaths[] = $path;
+        //     }
+
+        //     $property->images = json_encode($imagePaths);
+        // }
+
+        // Handle images
+        $existingImages = json_decode($property->images) ?? [];
+
+        // Handle deleted images
+        if ($request->has('deleted_images')) {
+            foreach ($request->deleted_images as $deletedImage) {
+                // Hapus dari storage
+                Storage::disk('public')->delete($deletedImage);
+
+                // Hapus dari array existing images
+                $existingImages = array_filter($existingImages, function ($image) use ($deletedImage) {
+                    return $image !== $deletedImage;
+                });
             }
+        }
 
-            // Store new images
+        // Handle new images
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('property_images', 'public');
-                $imagePaths[] = $path;
+                $existingImages[] = $path;
             }
-
-            $property->images = json_encode($imagePaths);
         }
+
+        // Update property dengan gabungan gambar yang ada dan gambar baru
+        $property->images = json_encode(array_values($existingImages));
 
         $property->save();
 
