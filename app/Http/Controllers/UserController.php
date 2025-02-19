@@ -24,7 +24,6 @@ class UserController extends Controller
         return view('admin.user', compact('users', 'title'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -43,19 +42,6 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
-
-    // Get a single user
-    // public function show(Request $request)
-    // {
-    //     $search = $request->input('search');
-
-    //     $users = User::where('username', 'LIKE', "%{$search}%")
-    //         ->orWhere('email', 'LIKE', "%{$search}%")
-    //         ->orWhere('role', 'LIKE', "%{$search}%")
-    //         ->get();
-
-    //     return view('admin.user', ['title' => 'User Admin'], compact('users'));
-    // }
 
     // Update a user
     public function update(Request $request, $id)

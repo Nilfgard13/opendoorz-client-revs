@@ -18,10 +18,6 @@
                             <h5 class="card-title fw-semibold">User Management</h5>
                         </div>
                         <div class="d-flex align-items-center">
-                            {{-- <form method="GET" action="#" class="me-2">
-                                <input type="text" name="search" class="form-control" placeholder="Cari User...">
-                            </form>
-                            <button type="button" class="btn btn-primary m-1">Search</button> --}}
                             <form action="{{ route('users.index') }}" method="GET" class="mb-3">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control" placeholder="Cari user..."
@@ -30,7 +26,6 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
                     <br>
                     <br>
@@ -41,7 +36,6 @@
                     <a href="{{ route('users.index') }}" class="btn btn-outline-primary m-1">
                         <i class="bi bi-arrow-clockwise"></i> Refresh
                     </a>
-
                     <table class="table">
                         <thead>
                             <tr>

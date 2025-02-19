@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NomorController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\CategoryTypeController;
 use App\Http\Controllers\CategoryLocationController;
 
@@ -34,9 +36,13 @@ Route::post('/user-create', [UserController::class, 'store'])->name('users.store
 Route::put('/user-update/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/user-delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
-Route::get('/property-admin', function () {
-    return view('admin/property', ['title' => 'Property Admin']);
-});
+//property admin
+Route::get('/property-admin', [PropertyController::class, 'index'])->name('property.index');
+Route::post('/property-create', [PropertyController::class, 'store'])->name('property.store');
+Route::get('/form-property', [PropertyController::class, 'showCategory'])->name('property.showCategory');
+Route::get('/property-edit/{id}', [PropertyController::class, 'edit'])->name('property.edit');
+Route::put('/property-update/{id}', [PropertyController::class, 'update'])->name('property.update');
+Route::delete('/property-delete/{id}', [PropertyController::class, 'destroy'])->name('property.destroy');
 
 //category type-admin
 Route::get('/category-admin', [CategoryTypeController::class, 'index'])->name('categorytype.index');
@@ -57,13 +63,10 @@ Route::put('/rotator-update/{id}', [NomorController::class, 'update'])->name('ro
 Route::delete('/rotator-delete/{id}', [NomorController::class, 'destroy'])->name('rotator.destroy');
 Route::get('/show-link', [NomorController::class, 'showlink'])->name('rotator.showLink');
 
-Route::get('/blog-admin', function () {
-    return view('admin/blog', ['title' => 'Blog Admin']);
-});
-
-Route::get('/review-admin', function () {
-    return view('admin/review', ['title' => 'Review Admin']);
-});
+//review-admin
+Route::get('/review-admin', [ReviewController::class, 'index'])->name('review.index');
+Route::post('/review-create', [ReviewController::class, 'store'])->name('review.store');
+Route::delete('/review-delete/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
 
 //Auth
 Route::get('/ors-login', function () {

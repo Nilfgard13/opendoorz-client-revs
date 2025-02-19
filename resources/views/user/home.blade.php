@@ -545,39 +545,64 @@
                         </div>
                     </div>
                 </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="col-lg-5">
-                    <form id="contact-form" action="" method="post">
+                    <form id="contact-form" action="{{ route('review.store') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-lg-12">
                                 <fieldset>
                                     <label for="name">Full Name</label>
-                                    <input type="name" name="name" id="name" placeholder="Your Name..."
-                                        autocomplete="on" required>
+                                    <input type="text" name="name" id="name"
+                                        class="form-control @error('name') is-invalid @enderror"
+                                        placeholder="Your Name..." autocomplete="on" required
+                                        value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
                                     <label for="email">Email Address</label>
-                                    <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                                        placeholder="Your E-mail..." required="">
+                                    <input type="email" name="email" id="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        placeholder="Your E-mail..." required value="{{ old('email') }}">
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <label for="subject">Subject</label>
-                                    <input type="subject" name="subject" id="subject" placeholder="Subject..."
-                                        autocomplete="on">
+                                    <label for="nomor">Nomor</label>
+                                    <input type="number" name="nomor" id="nomor"
+                                        class="form-control @error('nomor') is-invalid @enderror" placeholder="No HP"
+                                        autocomplete="on" required value="{{ old('nomor') }}">
+                                    @error('nomor')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <label for="message">Message</label>
-                                    <textarea name="message" id="message" placeholder="Your Message"></textarea>
+                                    <label for="deskripsi">Deskripsi</label>
+                                    <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
+                                        placeholder="Your Message">{{ old('deskripsi') }}</textarea>
+                                    @error('deskripsi')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </fieldset>
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <button type="submit" id="form-submit" class="orange-button">Send
+                                    <button type="submit" id="form-submit" class="btn btn-primary">Send
                                         Message</button>
                                 </fieldset>
                             </div>

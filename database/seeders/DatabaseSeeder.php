@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             RotatorSeeder::class,
+            CategoryLocation::class,
+            CategoryType::class,
         ]);
     }
 }
