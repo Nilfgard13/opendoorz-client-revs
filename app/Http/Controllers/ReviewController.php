@@ -33,7 +33,7 @@ class ReviewController extends Controller
             'deskripsi' => 'required|string|max:255',
         ]);
 
-        $title = 'Review Admin';
+        // $title = 'Review Admin';
 
         Review::create([
             'name' => $request->name,
@@ -42,7 +42,7 @@ class ReviewController extends Controller
             'deskripsi' => $request->deskripsi,
         ]);
 
-        return view('user.home', compact('title'));
+        return redirect()->route('user.index')->with('success', 'User deleted successfully');
     }
 
     // // Update a user

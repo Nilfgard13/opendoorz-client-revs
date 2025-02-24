@@ -24,9 +24,9 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <ul class="social-links">
-                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                        {{-- <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li> --}}
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                         <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
@@ -49,9 +49,9 @@
                         <ul class="nav">
                             <li><a href="/">Home</a></li>
                             <li><a href="/property">Properties</a></li>
-                            <li><a href="/details-property">Property Details</a></li>
+                            {{-- <li><a href="/details-property">Property Details</a></li> --}}
                             <li><a href="/contact" class="active">Contact Us</a></li>
-                            <li><a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
+                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>

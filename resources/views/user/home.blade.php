@@ -24,9 +24,9 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <ul class="social-links">
-                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                        {{-- <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li> --}}
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                         <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
@@ -49,9 +49,9 @@
                         <ul class="nav">
                             <li><a href="/" class="active">Home</a></li>
                             <li><a href="/property">Properties</a></li>
-                            <li><a href="/details-property">Property Details</a></li>
+                            {{-- <li><a href="/details-property">Property Details</a></li> --}}
                             <li><a href="/contact">Contact Us</a></li>
-                            <li><a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
+                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -139,13 +139,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Why is Villa Agency the best ?
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     Dolor <strong>almesit amet</strong>, consectetur adipiscing elit, sed doesn't
                                     eiusmod tempor incididunt ut labore consectetur <code>adipiscing</code> elit, sed do
@@ -299,7 +298,7 @@
                                                 Portfolio, TemplateMo One Page Layouts, etc.
                                             </p>
                                             <div class="icon-button">
-                                                <a href="property-details.html"><i class="fab fa-whatsapp fa-lg"></i>
+                                                <a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i>
                                                     Contact Admin</a>
                                             </div>
                                         </div>
@@ -330,7 +329,7 @@
                                                 mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella
                                                 venmo after messenger poutine next level humblebrag swag franzen.</p>
                                             <div class="icon-button">
-                                                <a href="property-details.html"><i class="fab fa-whatsapp fa-lg"></i>
+                                                <a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i>
                                                     Contact Admin</a>
                                             </div>
                                         </div>
@@ -361,7 +360,7 @@
                                                 mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella
                                                 venmo after messenger poutine next level humblebrag swag franzen.</p>
                                             <div class="icon-button">
-                                                <a href="property-details.html"><i class="fab fa-whatsapp fa-lg"></i>
+                                                <a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i>
                                                     Contact Admin</a>
                                             </div>
                                         </div>
@@ -386,120 +385,38 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-01.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$2.264.000</h6>
-                        <h4><a href="property-details.html">18 New Street Miami, OR 97219</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>8</span></li>
-                            <li>Bathrooms: <span>8</span></li>
-                            <li>Area: <span>545m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>6 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
+                @foreach ($property->take(6) as $user)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="item">
+                            @php
+                                $images = json_decode($user->images, true);
+                                $imageSrc =
+                                    $images && count($images) > 0
+                                        ? asset('storage/' . $images[0])
+                                        : 'user/assets/images/default-images.png';
+                            @endphp
+                            <a href="{{ route('user.show', $user->id) }}">
+                                <img src="{{ $imageSrc }}" alt="Property Image" width="350" height="260">
+                            </a>
+                            <span class="category">{{ $user->categoryType->name }}</span>
+                            <h6>Rp. {{ number_format($user->price, 2) }}</h6>
+                            <h4>
+                                <a href="{{ route('user.show', $user->id) }}">{{ $user->title }}</a>
+                            </h4>
+                            <ul>
+                                <li>Bedrooms: <span>{{ $user->bedrooms }}</span></li>
+                                <li>Bathrooms: <span>{{ $user->bathrooms }}</span></li>
+                                <li>Area: <span>{{ $user->area }}m²</span></li>
+                                <li>Floor: <span>{{ $user->floor }}</span></li>
+                                <li>Parking: <span>{{ $user->parking ?? 'N/A' }}</span></li>
+                            </ul>
+                            <div class="main-button">
+                                <a href="/show-link">Contact Admin</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-02.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$1.180.000</h6>
-                        <h4><a href="property-details.html">54 Mid Street Florida, OR 27001</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>6</span></li>
-                            <li>Bathrooms: <span>5</span></li>
-                            <li>Area: <span>450m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>8 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-03.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$1.460.000</h6>
-                        <h4><a href="property-details.html">26 Old Street Miami, OR 38540</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>5</span></li>
-                            <li>Bathrooms: <span>4</span></li>
-                            <li>Area: <span>225m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>10 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-04.jpg"
-                                alt=""></a>
-                        <span class="category">Apartment</span>
-                        <h6>$584.500</h6>
-                        <h4><a href="property-details.html">12 New Street Miami, OR 12650</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>4</span></li>
-                            <li>Bathrooms: <span>3</span></li>
-                            <li>Area: <span>125m2</span></li>
-                            <li>Floor: <span>25th</span></li>
-                            <li>Parking: <span>2 cars</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-05.jpg"
-                                alt=""></a>
-                        <span class="category">Penthouse</span>
-                        <h6>$925.600</h6>
-                        <h4><a href="property-details.html">34 Beach Street Miami, OR 42680</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>4</span></li>
-                            <li>Bathrooms: <span>4</span></li>
-                            <li>Area: <span>180m2</span></li>
-                            <li>Floor: <span>38th</span></li>
-                            <li>Parking: <span>2 cars</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-06.jpg"
-                                alt=""></a>
-                        <span class="category">Modern Condo</span>
-                        <h6>$450.000</h6>
-                        <h4><a href="property-details.html">22 New Street Portland, OR 16540</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>3</span></li>
-                            <li>Bathrooms: <span>2</span></li>
-                            <li>Area: <span>165m2</span></li>
-                            <li>Floor: <span>26th</span></li>
-                            <li>Parking: <span>3 cars</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </div>

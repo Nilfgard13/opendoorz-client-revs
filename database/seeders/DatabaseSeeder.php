@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             RotatorSeeder::class,
             CategoryLocation::class,
             CategoryType::class,
+            ReviewSeeder::class,
+            PropertySeeder::class,
         ]);
     }
 }

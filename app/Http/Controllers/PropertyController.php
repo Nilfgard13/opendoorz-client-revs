@@ -56,7 +56,7 @@ class PropertyController extends Controller
             'status' => 'required|string',
             'category_type_id' => 'required|exists:category_types,id',
             'category_location_id' => 'required|exists:category_locations,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $imagePaths = [];
@@ -132,27 +132,6 @@ class PropertyController extends Controller
         $property->category_type_id = $request->category_type_id;
         $property->category_location_id = $request->category_location_id;
 
-        // Handle image upload if new images are provided
-        // if ($request->hasFile('images')) {
-        //     $imagePaths = [];
-
-        //     // Delete old images from storage if they exist
-        //     if ($property->images) {
-        //         $oldImages = json_decode($property->images, true);
-        //         foreach ($oldImages as $oldImage) {
-        //             Storage::disk('public')->delete($oldImage);
-        //         }
-        //     }
-
-        //     // Store new images
-        //     foreach ($request->file('images') as $image) {
-        //         $path = $image->store('property_images', 'public');
-        //         $imagePaths[] = $path;
-        //     }
-
-        //     $property->images = json_encode($imagePaths);
-        // }
-
         // Handle images
         $existingImages = json_decode($property->images) ?? [];
 
@@ -187,12 +166,22 @@ class PropertyController extends Controller
 
     public function destroy($id)
     {
-        $property = Property::find($id);
-        if (!$property) {
-            return redirect()->back()->with('error', 'User not found');
+        $property = Property::findOrFail($id);
+
+        // Hapus file gambar dari storage
+        if ($property->images) {
+            $images = json_decode($property->images, true);
+            foreach ($images as $image) {
+                // Hapus file fisik dari storage
+                if (Storage::disk('public')->exists($image)) {
+                    Storage::disk('public')->delete($image);
+                }
+            }
         }
 
+        // Hapus data properti dari database
         $property->delete();
-        return redirect()->route('property.index')->with('success', 'User deleted successfully');
+
+        return redirect()->route('property.index')->with('success', 'Property deleted successfully');
     }
 }

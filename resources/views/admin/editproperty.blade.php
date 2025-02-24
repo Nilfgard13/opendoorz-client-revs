@@ -170,7 +170,7 @@
                                 </div>
 
                                 <!-- Untuk images -->
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="images" class="form-label">Property Images</label>
                                     <input type="file"
                                         class="form-control @error('images.*') is-invalid @enderror" id="images"
@@ -204,8 +204,62 @@
 
                                     <!-- Preview gambar baru -->
                                     <div id="imagePreview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                                </div> --}}
+
+                                <div class="mb-4">
+                                    <label for="images" class="form-label fw-semibold mb-2">Property Images</label>
+                                    <div class="input-group">
+                                        <input type="file"
+                                            class="form-control @error('images.*') is-invalid @enderror"
+                                            id="images" name="images[]" accept="image/*" multiple>
+                                    </div>
+                                    @error('images.*')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+
+                                    <!-- Existing Images -->
+                                    <div class="mt-3 row g-3" id="existingImages">
+                                        @foreach (json_decode($property->images, true) ?? [] as $image)
+                                            <div class="col-md-4 position-relative">
+                                                <img src="{{ asset('storage/' . $image) }}"
+                                                    class="img-fluid rounded border existing-image"
+                                                    data-image-path="{{ $image }}"
+                                                    onclick="openCropModal('{{ asset('storage/' . $image) }}', '{{ $image }}')">
+                                                <button type="button" class="btn btn-danger btn-sm position-absolute"
+                                                    style="top: 5px; right: 5px; border-radius: 50%; padding: 2px 6px;"
+                                                    onclick="removeExistingImage(this, '{{ $image }}')">×</button>
+                                                <input type="hidden" name="existing_images[]"
+                                                    value="{{ $image }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <!-- Preview New Images -->
+                                    <div id="imagePreview" class="mt-3 row g-3"></div>
                                 </div>
 
+                                <!-- Modal Crop -->
+                                <div class="modal fade" id="cropModal" tabindex="-1"
+                                    aria-labelledby="cropModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <img id="cropImage" style="max-width: 100%;">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary" id="cropAndSave">Crop
+                                                    & Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <button type="submit" class="btn btn-primary w-100">Update Property</button>
                             </form>
@@ -225,6 +279,132 @@
     </script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let cropper;
+            let selectedFile;
+            let currentImagePath = null;
+
+            // Event Listener untuk input file baru
+            document.getElementById('images').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    selectedFile = file;
+                    openCropModal(URL.createObjectURL(file));
+                }
+            });
+
+            // Fungsi untuk membuka modal cropping (bisa untuk gambar lama atau baru)
+            window.openCropModal = function(imageSrc, imagePath = null) {
+                currentImagePath = imagePath;
+                const image = document.getElementById('cropImage');
+                image.src = imageSrc;
+
+                // Tampilkan modal
+                const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+                cropModal.show();
+
+                // Tunggu modal terbuka sebelum inisialisasi Cropper.js
+                cropModal._element.addEventListener('shown.bs.modal', function() {
+                    if (cropper) cropper.destroy(); // Hancurkan instance sebelumnya
+                    cropper = new Cropper(image, {
+                        aspectRatio: 350 / 260,
+                        viewMode: 2,
+                        scalable: true,
+                        zoomable: true,
+                        background: false
+                    });
+                });
+            };
+
+            // Event untuk menyimpan hasil cropping
+            document.getElementById('cropAndSave').addEventListener('click', function() {
+                if (cropper) {
+                    const highResCanvas = cropper.getCroppedCanvas({
+                        width: 1400,
+                        height: 1040,
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                        willReadFrequently: true
+                    });
+
+                    // Resize ke ukuran final
+                    const finalCanvas = document.createElement('canvas');
+                    finalCanvas.width = 700;
+                    finalCanvas.height = 520;
+                    const ctx = finalCanvas.getContext('2d', {
+                        willReadFrequently: true
+                    });
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(highResCanvas, 0, 0, 700, 520);
+
+                    // Convert ke Blob (WebP untuk kualitas lebih baik)
+                    finalCanvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+
+                        // Jika gambar lama diedit, gantikan di existingImages
+                        if (currentImagePath) {
+                            const existingImages = document.getElementById('existingImages');
+                            const oldImageElement = existingImages.querySelector(
+                                `img[data-image-path="${currentImagePath}"]`);
+                            if (oldImageElement) {
+                                oldImageElement.src = url;
+
+                                // Tandai gambar lama sebagai dihapus
+                                const deletedImageInput = document.createElement('input');
+                                deletedImageInput.type = 'hidden';
+                                deletedImageInput.name = 'deleted_images[]';
+                                deletedImageInput.value = currentImagePath;
+                                document.querySelector('form').appendChild(deletedImageInput);
+                            }
+                        } else {
+                            // Jika gambar baru, tambahkan ke preview
+                            const previewContainer = document.getElementById('imagePreview');
+                            const preview = document.createElement('div');
+                            preview.classList.add('col-md-4');
+                            preview.innerHTML = `<img src="${url}" class="img-fluid rounded">`;
+                            previewContainer.appendChild(preview);
+
+                            // Simpan file ke input file
+                            const fileInput = document.getElementById('images');
+                            const dataTransfer = new DataTransfer();
+                            dataTransfer.items.add(new File([blob], selectedFile.name.replace(
+                                /\.[^/.]+$/, ".webp"), {
+                                type: 'image/webp'
+                            }));
+                            fileInput.files = dataTransfer.files;
+                        }
+
+                        // Tutup modal
+                        const cropModal = bootstrap.Modal.getInstance(document.getElementById(
+                            'cropModal'));
+                        cropModal.hide();
+                    }, 'image/webp', 1.0);
+                }
+            });
+
+            // Fungsi untuk menghapus gambar lama
+            window.removeExistingImage = function(button, imagePath) {
+                if (confirm('Are you sure you want to remove this image?')) {
+                    const imageContainer = button.closest('.col-md-4');
+
+                    // Tambahkan input hidden untuk menyimpan gambar yang akan dihapus
+                    const deletedImageInput = document.createElement('input');
+                    deletedImageInput.type = 'hidden';
+                    deletedImageInput.name = 'deleted_images[]';
+                    deletedImageInput.value = imagePath;
+                    document.querySelector('form').appendChild(deletedImageInput);
+
+                    // Hapus dari tampilan
+                    imageContainer.remove();
+                }
+            };
+        });
+    </script>
+
+
+    <script>
         function changeBackground(select) {
             const colorMap = {
                 available: "#d4edda", // Hijau muda
@@ -241,7 +421,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             const imageInput = document.getElementById("images");
             const imagePreview = document.getElementById("imagePreview");
@@ -306,7 +486,7 @@
                 }
             };
         });
-    </script>
+    </script> --}}
 
     {{-- <script>
         document.getElementById('images').addEventListener('change', function(event) {

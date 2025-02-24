@@ -5,30 +5,22 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NomorController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\CategoryTypeController;
 use App\Http\Controllers\CategoryLocationController;
 
 //user
-Route::get('/', function () {
-    return view('user/home', ['title' => 'Home Page']);
-});
-
-Route::get('/property', function () {
-    return view('user/property', ['title' => 'Property']);
-});
-
-Route::get('/details-property', function () {
-    return view('user/details-property', ['title' => 'Property Details']);
-});
+Route::get('/', [LandingpageController::class, 'homeIndex'])->name('user.index');
+Route::get('/details-property/{id}', [LandingpageController::class, 'detailsIndex'])->name('user.show');
+Route::get('/property', [LandingpageController::class, 'propertyIndex'])->name('user.propertyIndex');
 
 Route::get('/contact', function () {
     return view('user/contact', ['title' => 'Contact']);
 });
 
 //admin
-Route::get('/home-admin', function () {
-    return view('admin/home', ['title' => 'Dashboard']);
-});
+Route::get('/home-admin', [DashboardController::class, 'countProperties'])->name('admin.dashboard');
 
 //user-admin
 Route::get('/user-admin', [UserController::class, 'index'])->name('users.index');

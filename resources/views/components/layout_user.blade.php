@@ -11,14 +11,15 @@
     <x-title>{{ $title }}</x-title>
 
     <!-- Bootstrap core CSS -->
-    <link href="user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('user/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="shortcut icon" type="image/png" href="admin/assets/images/logos/Artboard 11 copy 4@300x.png" />
-    <link rel="stylesheet" href="user/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="user/assets/css/templatemo-villa-agency.css">
-    <link rel="stylesheet" href="user/assets/css/owl.css">
-    <link rel="stylesheet" href="user/assets/css/animate.css">
+    <link rel="shortcut icon" type="image/png"
+        href="{{ asset('admin/assets/images/logos/Artboard 11 copy 4@300x.png') }}" />
+    <link rel="stylesheet" href="{{ asset('user/assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/assets/css/templatemo-villa-agency.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('user/assets/css/animate.css') }}">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <!--
 
@@ -46,12 +47,12 @@ https://templatemo.com/tm-591-villa-agency
 
     <!-- Scripts -->
     <!-- Bootstrap core JavaScript -->
-    <script src="user/vendor/jquery/jquery.min.js"></script>
-    <script src="user/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="user/assets/js/isotope.min.js"></script>
-    <script src="user/assets/js/owl-carousel.js"></script>
-    <script src="user/assets/js/counter.js"></script>
-    <script src="user/assets/js/custom.js"></script>
+    <script src="{{ asset('user/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('user/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('user/assets/js/isotope.min.js') }}"></script>
+    <script src="{{ asset('user/assets/js/owl-carousel.js') }}"></script>
+    <script src="{{ asset('user/assets/js/counter.js') }}"></script>
+    <script src="{{ asset('user/assets/js/custom.js') }}"></script>
 
 </body>
 

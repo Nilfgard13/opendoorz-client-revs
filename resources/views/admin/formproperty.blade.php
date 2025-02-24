@@ -170,7 +170,6 @@
                                         <input type="file"
                                             class="form-control @error('images.*') is-invalid @enderror"
                                             id="images" name="images[]" accept="image/*" multiple>
-                                        {{-- <label class="input-group-text" for="images">Browse</label> --}}
                                     </div>
                                     @error('images.*')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -178,6 +177,30 @@
 
                                     <div id="imagePreview" class="mt-3 row g-3"></div>
                                 </div>
+
+                                <!-- Modal Crop -->
+                                <div class="modal fade" id="cropModal" tabindex="-1"
+                                    aria-labelledby="cropModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <img id="cropImage" style="max-width: 100%;">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary" id="cropAndSave">Crop
+                                                    & Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <button type="submit" class="btn btn-primary w-100">Add Property</button>
                             </form>
@@ -189,98 +212,214 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const imageInput = document.getElementById("images");
-            const imagePreview = document.getElementById("imagePreview");
-            let imageFiles = [];
+        document.addEventListener('DOMContentLoaded', function() {
+            let cropper;
+            let selectedFile;
 
-            imageInput.addEventListener("change", function() {
-                imageFiles = Array.from(imageInput.files);
-                updatePreview();
+            document.getElementById('images').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    selectedFile = file;
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const image = document.getElementById('cropImage');
+                        image.src = e.target.result;
+
+                        // Show crop modal
+                        const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+                        cropModal.show();
+
+                        // Wait for modal to open, then initialize cropper
+                        cropModal._element.addEventListener('shown.bs.modal', function() {
+                            if (cropper) cropper
+                        .destroy(); // Destroy previous instance if exists
+                            cropper = new Cropper(image, {
+                                aspectRatio: 350 / 260,
+                                viewMode: 2,
+                                scalable: true,
+                                zoomable: true,
+                                background: false
+                            });
+                        });
+                    };
+
+                    reader.readAsDataURL(file);
+                }
             });
 
-            function updatePreview() {
-                imagePreview.innerHTML = "";
+            // Event to save cropping result
+            document.getElementById('cropAndSave').addEventListener('click', function() {
+                if (cropper) {
+                    const highResCanvas = cropper.getCroppedCanvas({
+                        width: 1400,
+                        height: 1040,
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                        willReadFrequently: true
+                    });
 
-                if (imageFiles.length === 0) {
-                    imagePreview.innerHTML = `
-                        <div class="col-12">
-                            <div class="text-center p-3 border rounded bg-light">
-                                <p class="text-muted mb-0">No images selected</p>
-                            </div>
-                        </div>`;
-                    return;
+                    // Resize to final size
+                    const finalCanvas = document.createElement('canvas');
+                    finalCanvas.width = 700;
+                    finalCanvas.height = 520;
+                    const ctx = finalCanvas.getContext('2d', {
+                        willReadFrequently: true
+                    });
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(highResCanvas, 0, 0, 700, 520);
+
+                    // Convert to Blob (WebP for better quality & smaller size)
+                    finalCanvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+
+                        // Clear previous preview and show new image
+                        const previewContainer = document.getElementById('imagePreview');
+                        previewContainer.innerHTML = ''; // Clear previous preview
+                        const preview = document.createElement('div');
+                        preview.classList.add('col-md-4');
+                        preview.innerHTML = `<img src="${url}" class="img-fluid rounded">`;
+                        previewContainer.appendChild(preview);
+
+                        // Save to file input
+                        const fileInput = document.getElementById('images');
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(new File([blob], selectedFile.name.replace(
+                            /\.[^/.]+$/, ".webp"), {
+                            type: 'image/webp'
+                        }));
+                        fileInput.files = dataTransfer.files;
+
+                        // Close modal
+                        const cropModal = bootstrap.Modal.getInstance(document.getElementById(
+                            'cropModal'));
+                        cropModal.hide();
+                    }, 'image/webp', 1.0);
                 }
-
-                imageFiles.forEach((file, index) => {
-                    if (!file.type.startsWith("image/")) return;
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const div = document.createElement("div");
-                        div.className = "col-6 col-sm-4 col-md-3 col-lg-2";
-
-                        div.innerHTML = `
-                            <div class="card h-100 position-relative image-card">
-                                <div class="ratio ratio-1x1">
-                                    <img src="${e.target.result}" 
-                                        class="card-img-top object-fit-cover" 
-                                        alt="Preview">
-                                </div>
-                                <button type="button" 
-                                    class="btn-close position-absolute top-0 end-0 m-2 bg-white rounded-circle" 
-                                    onclick="removeImage(${index})"
-                                    style="width: 20px; height: 20px;">
-                                </button>
-                                <div class="card-footer p-2 bg-light">
-                                    <small class="text-muted text-truncate d-block">${file.name}</small>
-                                </div>
-                            </div>
-                        `;
-                        imagePreview.appendChild(div);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-
-            window.removeImage = function(index) {
-                imageFiles.splice(index, 1);
-                const dt = new DataTransfer();
-                imageFiles.forEach(file => dt.items.add(file));
-                imageInput.files = dt.files;
-                updatePreview();
-            };
-
-            // Add some CSS
-            const style = document.createElement('style');
-            style.textContent = `
-                .image-card {
-                    transition: all 0.3s ease;
-                    border: 1px solid rgba(0,0,0,.125);
-                }
-                .image-card:hover {
-                    box-shadow: 0 4px 8px rgba(0,0,0,.1);
-                    transform: translateY(-2px);
-                }
-                .btn-close {
-                    opacity: 0.8;
-                    transition: opacity 0.2s ease;
-                }
-                .btn-close:hover {
-                    opacity: 1;
-                }
-            `;
-            document.head.appendChild(style);
+            });
         });
     </script>
 
-    <script>
-        function previewImage(event) {
-            const image = document.getElementById('imagePreview');
-            image.src = URL.createObjectURL(event.target.files[0]);
-            image.style.display = 'block';
-        }
-    </script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let cropper;
+            let selectedFile;
+
+            document.getElementById('images').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    selectedFile = file;
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const image = document.getElementById('cropImage');
+                        image.src = e.target.result;
+
+                        // Tampilkan modal crop
+                        const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+                        cropModal.show();
+
+                        // Tunggu modal terbuka, lalu inisialisasi cropper
+                        cropModal._element.addEventListener('shown.bs.modal', function() {
+                            if (cropper) cropper
+                                .destroy(); // Hancurkan instance sebelumnya jika ada
+                            cropper = new Cropper(image, {
+                                aspectRatio: 350 / 260, // Set rasio crop
+                                viewMode: 2,
+                                scalable: true,
+                                zoomable: true,
+                                background: false
+                            });
+                        });
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Event untuk menyimpan hasil cropping
+            document.getElementById('cropAndSave').addEventListener('click', function() {
+                if (cropper) {
+                    const highResCanvas = cropper.getCroppedCanvas({
+                        width: 1400, // 4x ukuran asli (untuk detail tinggi)
+                        height: 1040,
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                        willReadFrequently: true
+                    });
+
+                    // Resize ke ukuran final
+                    const finalCanvas = document.createElement('canvas');
+                    finalCanvas.width = 700; // Final 2x ukuran asli
+                    finalCanvas.height = 520;
+                    const ctx = finalCanvas.getContext('2d', {
+                        willReadFrequently: true
+                    });
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(highResCanvas, 0, 0, 700, 520);
+
+                    // Konversi ke Blob (WebP untuk kualitas lebih baik & ukuran lebih kecil)
+                    finalCanvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+
+                        // Tampilkan hasil cropping di preview
+                        const previewContainer = document.getElementById('imagePreview');
+                        const preview = document.createElement('div');
+                        preview.classList.add('col-md-4');
+                        preview.innerHTML = `<img src="${url}" class="img-fluid rounded">`;
+                        previewContainer.appendChild(preview);
+
+                        // Simpan ke input file (opsional jika ingin dikirim ke backend)
+                        const fileInput = document.getElementById('images');
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(new File([blob], selectedFile.name.replace(
+                            /\.[^/.]+$/, ".webp"), {
+                            type: 'image/webp'
+                        }));
+                        fileInput.files = dataTransfer.files;
+
+                        // Tutup modal
+                        const cropModal = bootstrap.Modal.getInstance(document.getElementById(
+                            'cropModal'));
+                        cropModal.hide();
+                    }, 'image/webp', 1.0); // WebP dengan kualitas maksimal
+                }
+            });
+        });
+    </script> --}}
+
+    {{-- <script>
+        document.getElementById('images').addEventListener('change', function(event) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = ''; // Clear existing previews
+
+            const files = event.target.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file) {
+                    // Create preview container
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4';
+
+                    // Create image element
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.className = 'img-fluid rounded';
+                    img.style.height = '200px';
+                    img.style.objectFit = 'cover';
+
+                    // Add to preview
+                    col.appendChild(img);
+                    preview.appendChild(col);
+                }
+            }
+        });
+    </script> --}}
 
     <script>
         function changeBackground(select) {
@@ -299,27 +438,12 @@
         });
     </script>
 
-    {{-- <script>
-        document.getElementById('images').addEventListener('change', function(event) {
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = '';
-
-            Array.from(event.target.files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '150px';
-                    img.style.height = '150px';
-                    img.style.objectFit = 'cover';
-                    img.classList.add('rounded');
-                    preview.appendChild(img);
-                }
-                reader.readAsDataURL(file);
-            });
-        });
-    </script> --}}
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
 
 </x-layout_admin>

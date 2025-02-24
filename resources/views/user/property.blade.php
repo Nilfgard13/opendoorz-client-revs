@@ -24,9 +24,9 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <ul class="social-links">
-                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                        {{-- <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li> --}}
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
                         <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
@@ -49,9 +49,9 @@
                         <ul class="nav">
                             <li><a href="/">Home</a></li>
                             <li><a href="/property" class="active">Properties</a></li>
-                            <li><a href="/details-property">Property Details</a></li>
+                            {{-- <li><a href="/details-property">Property Details</a></li> --}}
                             <li><a href="/contact">Contact Us</a></li>
-                            <li><a href="#"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
+                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -81,194 +81,86 @@
                 <li>
                     <a class="is_active" href="#!" data-filter="*">Show All</a>
                 </li>
-                <li>
-                    <a href="#!" data-filter=".adv">Apartment</a>
-                </li>
-                <li>
-                    <a href="#!" data-filter=".str">Villa House</a>
-                </li>
-                <li>
-                    <a href="#!" data-filter=".rac">Penthouse</a>
-                </li>
+                @foreach ($types as $type)
+                    <li>
+                        <a href="#!" data-filter=".{{ $type->name }}">{{ $type->name }}</a>
+                    </li>
+                @endforeach
             </ul>
+            <!-- Search Bar -->
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="search-container">
+                        <form action="{{ route('user.propertyIndex') }}" method="GET" class="search-form">
+                            <div class="elegant-search-group">
+                                <div class="search-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65">
+                                        </line>
+                                    </svg>
+                                </div>
+                                <input type="text" class="elegant-search-input" name="search"
+                                    placeholder="Temukan properti impian Anda..." value="{{ request('search') }}">
+                                <button class="elegant-search-button" type="submit">
+                                    <span class="button-text">Cari Properti</span>
+                                    <span class="button-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65">
+                                            </line>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="row properties-box">
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-01.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$2.264.000</h6>
-                        <h4><a href="property-details.html">18 Old Street Miami, OR 97219</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>8</span></li>
-                            <li>Bathrooms: <span>8</span></li>
-                            <li>Area: <span>545m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>6 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
+                @foreach ($property->take(9) as $user)
+                    <div
+                        class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv {{ $user->categoryType->name }}">
+                        <div class="item">
+                            @php
+                                $images = json_decode($user->images, true);
+                                $imageSrc =
+                                    $images && count($images) > 0
+                                        ? asset('storage/' . $images[0])
+                                        : 'user/assets/images/default-images.png';
+                            @endphp
+                            <a href="{{ route('user.show', $user->id) }}">
+                                <img src="{{ $imageSrc }}" alt="Property Image" width="350" height="260">
+                            </a>
+                            <span class="category">{{ $user->categoryType->name }}</span>
+                            <h6>Rp. {{ number_format($user->price, 2) }}</h6>
+                            <h4>
+                                <a href="{{ route('user.show', $user->id) }}">{{ $user->title }}</a>
+                            </h4>
+                            <ul>
+                                <li>Bedrooms: <span>{{ $user->bedrooms }}</span></li>
+                                <li>Bathrooms: <span>{{ $user->bathrooms }}</span></li>
+                                <li>Area: <span>{{ $user->area }}m²</span></li>
+                                <li>Floor: <span>{{ $user->floor }}</span></li>
+                                <li>Parking: <span>{{ $user->parking ?? 'N/A' }}</span></li>
+                            </ul>
+                            <div class="main-button">
+                                <a href="/show-link">Contact Admin</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 str">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-02.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$1.180.000</h6>
-                        <h4><a href="property-details.html">54 New Street Florida, OR 27001</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>6</span></li>
-                            <li>Bathrooms: <span>5</span></li>
-                            <li>Area: <span>450m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>8 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv rac">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-03.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$1.460.000</h6>
-                        <h4><a href="property-details.html">26 Mid Street Portland, OR 38540</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>5</span></li>
-                            <li>Bathrooms: <span>4</span></li>
-                            <li>Area: <span>225m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>10 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 str">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-04.jpg"
-                                alt=""></a>
-                        <span class="category">Apartment</span>
-                        <h6>$584.500</h6>
-                        <h4><a href="property-details.html">12 Hope Street Portland, OR 12650</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>4</span></li>
-                            <li>Bathrooms: <span>3</span></li>
-                            <li>Area: <span>125m2</span></li>
-                            <li>Floor: <span>25th</span></li>
-                            <li>Parking: <span>2 cars</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac str">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-05.jpg"
-                                alt=""></a>
-                        <span class="category">Penthouse</span>
-                        <h6>$925.600</h6>
-                        <h4><a href="property-details.html">34 Hope Street Portland, OR 42680</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>4</span></li>
-                            <li>Bathrooms: <span>4</span></li>
-                            <li>Area: <span>180m2</span></li>
-                            <li>Floor: <span>38th</span></li>
-                            <li>Parking: <span>2 cars</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac adv">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-06.jpg"
-                                alt=""></a>
-                        <span class="category">Modern Condo</span>
-                        <h6>$450.000</h6>
-                        <h4><a href="property-details.html">22 Hope Street Portland, OR 16540</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>3</span></li>
-                            <li>Bathrooms: <span>2</span></li>
-                            <li>Area: <span>165m2</span></li>
-                            <li>Floor: <span>26th</span></li>
-                            <li>Parking: <span>3 cars</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac str">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-03.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$980.000</h6>
-                        <h4><a href="property-details.html">14 Mid Street Miami, OR 36450</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>8</span></li>
-                            <li>Bathrooms: <span>8</span></li>
-                            <li>Area: <span>550m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>12 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac adv">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-02.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$1.520.000</h6>
-                        <h4><a href="property-details.html">26 Old Street Miami, OR 12870</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>12</span></li>
-                            <li>Bathrooms: <span>15</span></li>
-                            <li>Area: <span>380m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>14 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 rac adv">
-                    <div class="item">
-                        <a href="property-details.html"><img src="user/assets/images/property-01.jpg"
-                                alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$3.145.000</h6>
-                        <h4><a href="property-details.html">34 New Street Miami, OR 24650</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>10</span></li>
-                            <li>Bathrooms: <span>12</span></li>
-                            <li>Area: <span>860m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>10 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.html">Contact Admin</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="pagination">
-                        <li><a href="#">1</a></li>
-                        <li><a class="is_active" href="#">2</a></li>
+                        <li><a class="is_active" href="#">1</a></li>
+                        <li><a href="#">2</a></li>
                         <li><a href="#">3</a></li>
                         <li><a href="#">>></a></li>
                     </ul>
@@ -276,4 +168,212 @@
             </div>
         </div>
     </div>
+
+    <style>
+        /* Base Styles */
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .elegant-search-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08),
+                0 1px 3px rgba(0, 0, 0, 0.02);
+            padding: 6px;
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .elegant-search-group:focus-within {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12),
+                0 2px 5px rgba(0, 0, 0, 0.02);
+            transform: translateY(-1px);
+            border-color: rgba(229, 231, 235, 0.8);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .elegant-search-input {
+            width: 100%;
+            height: 54px;
+            padding: 0 30px 0 55px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            color: #1e293b;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+
+        .elegant-search-input::placeholder {
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        .elegant-search-input:focus {
+            outline: none;
+        }
+
+        .elegant-search-button {
+            min-width: 120px;
+            height: 44px;
+            margin-right: 6px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .elegant-search-button:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .elegant-search-button:active {
+            transform: translateY(1px);
+        }
+
+        .button-icon {
+            display: none;
+        }
+
+        /* Tablet Styles */
+        @media (max-width: 992px) {
+            .search-container {
+                padding: 25px 15px;
+            }
+
+            .elegant-search-input {
+                height: 50px;
+                font-size: 15px;
+            }
+
+            .elegant-search-button {
+                min-width: 100px;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .search-container {
+                padding: 15px 10px;
+            }
+
+            .elegant-search-group {
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 12px;
+            }
+
+            .elegant-search-input {
+                height: 44px;
+                font-size: 14px;
+                padding: 0 15px;
+                text-align: left;
+                border-radius: 8px;
+                background: #f8fafc;
+                margin-bottom: 8px;
+            }
+
+            .search-icon {
+                display: none;
+            }
+
+            .elegant-search-button {
+                width: 100%;
+                margin: 0;
+                height: 40px;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+            .button-text {
+                display: none;
+            }
+
+            .button-icon {
+                display: block;
+            }
+        }
+
+        /* Small Mobile Styles */
+        @media (max-width: 480px) {
+            .search-container {
+                padding: 10px;
+            }
+
+            .elegant-search-group {
+                padding: 8px;
+            }
+
+            .elegant-search-input {
+                height: 40px;
+                font-size: 13px;
+            }
+
+            .elegant-search-input::placeholder {
+                font-size: 13px;
+            }
+
+            .elegant-search-button {
+                height: 38px;
+            }
+        }
+
+        /* Optional: Add touch-friendly tap targets for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .elegant-search-button {
+                min-height: 44px;
+                /* Ensure minimum tap target size */
+            }
+        }
+
+        /* Optional: Add a subtle animation for loading state */
+        .elegant-search-button.loading {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background-size: 200% 200%;
+            animation: gradient 1.5s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+
 </x-layout_user>
