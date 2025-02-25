@@ -285,37 +285,70 @@
             let currentImagePath = null;
 
             // Event Listener untuk input file baru
-            document.getElementById('images').addEventListener('change', function(event) {
-                const file = event.target.files[0];
+            const imageInput = document.getElementById('images');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(event) {
+                    console.log('File selected'); // Untuk debugging
+                    const file = event.target.files[0];
 
-                if (file) {
-                    selectedFile = file;
-                    openCropModal(URL.createObjectURL(file));
-                }
-            });
+                    if (file) {
+                        selectedFile = file;
+                        openCropModal(URL.createObjectURL(file));
+                    }
+                });
+            } else {
+                console.error('Image input element not found'); // Untuk debugging
+            }
 
             // Fungsi untuk membuka modal cropping (bisa untuk gambar lama atau baru)
             window.openCropModal = function(imageSrc, imagePath = null) {
+                console.log('Opening crop modal with image:', imageSrc); // Untuk debugging
                 currentImagePath = imagePath;
                 const image = document.getElementById('cropImage');
+                if (!image) {
+                    console.error('Crop image element not found'); // Untuk debugging
+                    return;
+                }
                 image.src = imageSrc;
 
                 // Tampilkan modal
-                const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
-                cropModal.show();
+                const modalElement = document.getElementById('cropModal');
+                if (!modalElement) {
+                    console.error('Crop modal element not found'); // Untuk debugging
+                    return;
+                }
 
-                // Tunggu modal terbuka sebelum inisialisasi Cropper.js
-                cropModal._element.addEventListener('shown.bs.modal', function() {
-                    if (cropper) cropper.destroy(); // Hancurkan instance sebelumnya
-                    cropper = new Cropper(image, {
-                        aspectRatio: 350 / 260,
-                        viewMode: 2,
-                        scalable: true,
-                        zoomable: true,
-                        background: false
+                try {
+                    const cropModal = new bootstrap.Modal(modalElement);
+                    cropModal.show();
+
+                    // Tunggu modal terbuka sebelum inisialisasi Cropper.js
+                    modalElement.addEventListener('shown.bs.modal', function() {
+                        console.log('Modal shown, initializing cropper'); // Untuk debugging
+                        if (cropper) cropper.destroy(); // Hancurkan instance sebelumnya
+                        cropper = new Cropper(image, {
+                            aspectRatio: 350 / 260,
+                            viewMode: 2,
+                            scalable: true,
+                            zoomable: true,
+                            background: false
+                        });
                     });
-                });
+                } catch (error) {
+                    console.error('Error initializing modal:', error); // Untuk debugging
+                }
             };
+
+            // Event untuk menyimpan hasil cropping
+            const cropSaveButton = document.getElementById('cropAndSave');
+            if (cropSaveButton) {
+                cropSaveButton.addEventListener('click', function() {
+                    console.log('Crop and save clicked'); // Untuk debugging
+                    // ... sisa kode crop dan save tidak berubah ...
+                });
+            } else {
+                console.error('Crop and save button not found'); // Untuk debugging
+            }
 
             // Event untuk menyimpan hasil cropping
             document.getElementById('cropAndSave').addEventListener('click', function() {
@@ -510,5 +543,12 @@
     </script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Tambahkan di bagian head dokumen HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Tambahkan di bagian akhir body sebelum script Anda -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
 
 </x-layout_admin>

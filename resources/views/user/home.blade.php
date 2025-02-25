@@ -411,7 +411,7 @@
                                 <li>Parking: <span>{{ $user->parking ?? 'N/A' }}</span></li>
                             </ul>
                             <div class="main-button">
-                                <a href="/show-link">Contact Admin</a>
+                                <a href="{{ route('rotator.showLink', $user->id) }}">Contact Admin</a>
                             </div>
                         </div>
                     </div>

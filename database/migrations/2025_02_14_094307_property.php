@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('area');
             $table->integer('floor');
             $table->string('address');
+            $table->integer('parking')->nullable();
             $table->enum('status',['available', 'sold', 'reserved', 'on progress']);
             $table->foreignId('category_type_id')->constrained('category_types')->onDelete('cascade');
             $table->foreignId('category_location_id')->constrained('category_locations')->onDelete('cascade');

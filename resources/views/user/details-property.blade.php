@@ -94,7 +94,7 @@
                     <div class="main-content">
                         <span class="category">{{ $property->categoryType->name }}</span>
                         <h4>{{ $property->title }}<br>
-                            <p>{{ $property->address }}</p>
+                            <p>{{ $property->address }}, {{ $property->categoryLocation->name }}</p>
                         </h4>
                         <p>{{ $property->description }}
                         </p>
@@ -114,7 +114,8 @@
 
                                     <!-- Harga -->
                                     <div class="mb-3 text-center">
-                                        <h3 class="fw-bold text-primary">Rp {{ number_format($property->price, 2) }}</h3>
+                                        <h3 class="fw-bold text-primary">Rp {{ number_format($property->price, 2) }}
+                                        </h3>
                                         <p class="text-danger small">*Harga dapat berubah sewaktu-waktu</p>
                                     </div>
 
@@ -146,11 +147,11 @@
 
                                     <!-- Tombol CTA -->
                                     <div class="mt-4 text-center">
-                                        <a href="/show-link"
+                                        <a href="{{ route('rotator.showLink', $property->id) }}"
                                             class="btn btn-lg fw-bold d-flex align-items-center justify-content-center"
-                                            style="background-color: #354dbd; color: white; font-size: 1.2rem; border-radius: 10px; padding: 12px 20px; transition: all 0.3s ease-in-out;"
-                                            onmouseover="this.style.backgroundColor='#1e1e1e'"
-                                            onmouseout="this.style.backgroundColor='#354dbd'">
+                                            style="background-color: #1c1c1c; color: white; font-size: 1.2rem; border-radius: 10px; padding: 12px 20px; transition: all 0.3s ease-in-out;"
+                                            onmouseover="this.style.backgroundColor='#354dbd'"
+                                            onmouseout="this.style.backgroundColor='#1c1c1c'">
                                             <i class="fab fa-whatsapp fa-lg me-2"></i> Hubungi Kami
                                         </a>
                                     </div>
@@ -187,7 +188,7 @@
                             <li>
                                 <img src="{{ asset('user/assets/images/parking.png') }}" alt=""
                                     style="max-width: 52px;">
-                                <h4>Parking<br><span>24/7 Under Control</span></h4>
+                                <h4>Parking<br><span>{{ $property->parking ?? 'N/A' }} car</span></h4>
                             </li>
                         </ul>
                     </div>

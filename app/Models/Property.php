@@ -19,6 +19,7 @@ class Property extends Model
         'area',
         'floor',
         'address',
+        'parking',
         'status',
         'category_type_id',
         'category_location_id',

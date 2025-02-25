@@ -19,6 +19,7 @@ class PropertyController extends Controller
                 ->orWhere('description', 'LIKE', "%{$search}%")
                 ->orWhere('price', 'LIKE', "%{$search}%")
                 ->orWhere('address', 'LIKE', "%{$search}%")
+                ->orWhere('parking', 'LIKE', "%{$search}%")
                 ->orWhereHas('categoryType', function ($query) use ($search) {
                     $query->where('name', 'LIKE', "%{$search}%");
                 })
@@ -53,6 +54,7 @@ class PropertyController extends Controller
             'area' => 'required|integer|min:0',
             'floor' => 'required|integer|min:0',
             'address' => 'required|string|max:500',
+            'parking' => 'integer|min:0',
             'status' => 'required|string',
             'category_type_id' => 'required|exists:category_types,id',
             'category_location_id' => 'required|exists:category_locations,id',
@@ -76,6 +78,7 @@ class PropertyController extends Controller
             'area' => $request->area,
             'floor' => $request->floor,
             'address' => $request->address,
+            'parking' => $request->parking,
             'status' => $request->status,
             'category_type_id' => $request->category_type_id,
             'category_location_id' => $request->category_location_id,
@@ -113,10 +116,11 @@ class PropertyController extends Controller
             'area' => 'required|integer|min:0',
             'floor' => 'required|integer|min:0',
             'address' => 'required|string|max:500',
+            'parking' => 'integer|min:0',
             'status' => 'required|string',
             'category_type_id' => 'required|exists:category_types,id',
             'category_location_id' => 'required|exists:category_locations,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         // Update basic property information
@@ -128,6 +132,7 @@ class PropertyController extends Controller
         $property->area = $request->area;
         $property->floor = $request->floor;
         $property->address = $request->address;
+        $property->parking = $request->parking;
         $property->status = $request->status;
         $property->category_type_id = $request->category_type_id;
         $property->category_location_id = $request->category_location_id;

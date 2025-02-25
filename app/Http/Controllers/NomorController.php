@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Nomor;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class NomorController extends Controller
@@ -68,10 +69,44 @@ class NomorController extends Controller
         return redirect()->route('rotator.index')->with('success', 'User deleted successfully');
     }
 
-    public function generateLink()
+    // public function generateLink()
+    // {
+
+    //     // Text message to be sent
+    //     $text = "";
+
+    //     // Admin WhatsApp numbers from the Nomor table
+    //     $admins = Nomor::pluck('nomor')->toArray();
+
+    //     // File to store the current admin index
+    //     $indexFile = 'admin_index.txt';
+
+    //     // Initialize index if file does not exist
+    //     if (!file_exists(storage_path($indexFile))) {
+    //         $currentIndex = 0;
+    //         file_put_contents(storage_path($indexFile), $currentIndex);
+    //     } else {
+    //         $currentIndex = (int)file_get_contents(storage_path($indexFile));
+    //     }
+
+    //     // Select the next admin
+    //     $adminNumber = $admins[$currentIndex];
+
+    //     // Update the index for the next user
+    //     $nextIndex = ($currentIndex + 1) % count($admins);
+    //     file_put_contents(storage_path($indexFile), $nextIndex);
+
+    //     // Generate the WhatsApp URL
+    //     $url = "https://api.whatsapp.com/send?phone=" . $adminNumber . "&text=" . urlencode($text);
+    //     session()->flash('generated_url', $url);
+
+    //     return $url;
+    // }
+
+    public function generateLink($id)
     {
         // Text message to be sent
-        $text = "";
+        $text = $this->chatShow($id);
 
         // Admin WhatsApp numbers from the Nomor table
         $admins = Nomor::pluck('nomor')->toArray();
@@ -101,12 +136,60 @@ class NomorController extends Controller
         return $url;
     }
 
-    public function showlink()
+    // public function showlink()
+    // {
+    //     // Call the generateLink method and get the URL
+    //     $url = $this->generateLink();  // or use $this->generateLink(); if it's in the same class
+
+    //     // Return the view with the generated URL
+    //     return redirect($url);
+    // }
+
+    public function showlink($id = null)
     {
+        // Jika tidak ada id, mungkin Anda ingin mengarahkan ke halaman lain
+        // if ($id === null) {
+        //     // Opsi 1: Redirect ke halaman tertentu
+        //     return redirect()->route('user.index'); // Ganti 'home' dengan nama route yang sesuai
+
+        //     // Opsi 2: Tampilkan pesan error
+        //     // return back()->with('error', 'ID properti tidak ditemukan');
+        // }
+
         // Call the generateLink method and get the URL
-        $url = $this->generateLink();  // or use $this->generateLink(); if it's in the same class
+        $url = $this->generateLink($id);
 
         // Return the view with the generated URL
         return redirect($url);
+    }
+
+    public function chatShow($id = null)
+    {
+        // Jika $id adalah null atau tidak ditemukan, kembalikan string kosong
+        if ($id === null) {
+            return "";
+        }
+
+        // Coba menemukan property, jika tidak ditemukan kembalikan string kosong
+        try {
+            $property = Property::findOrFail($id);
+
+            // Format harga dengan pemisah ribuan
+            $formattedPrice = number_format($property->price, 0, ',', '.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return "";
+        }
+
+        $detailProduct = url('/details-property/' . $property->id);
+        
+        $text = $detailProduct . PHP_EOL . "🌟 Halo Admin Opendoorz" . PHP_EOL . PHP_EOL
+            . "Saya tertarik dengan properti *" . $property->title . "* yang tersedia di website." . PHP_EOL . PHP_EOL
+            . "🏡 *Nama Properti*: " . $property->title . PHP_EOL
+            . "📍 *Lokasi*: " . $property->address . ", " . ($property->categoryLocation->name ?? '') . PHP_EOL
+            . "💰 *Harga*: Rp. " . $formattedPrice . PHP_EOL . PHP_EOL
+            . "Saya ingin mengetahui lebih lanjut tentang proses pembelian dan detail lainnya." . PHP_EOL
+            . "Bisa tolong dibantu untuk informasinya? Terima kasih! 😊";
+
+        return $text;
     }
 }

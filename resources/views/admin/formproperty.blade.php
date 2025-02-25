@@ -145,7 +145,16 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="mb-3">
+                                    <label for="parking" class="form-label">Parking</label>
+                                    <input type="number"
+                                        class="form-control @error('parking') is-invalid @enderror" id="parking"
+                                        name="parking" value="{{ old('parking') }}" placeholder="Per Car"
+                                        min="1" required>
+                                    @error('parking')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="mb-3">
                                     <label for="status" class="form-label">Status</label>
                                     <select class="form-select @error('status') is-invalid @enderror" id="status"
@@ -234,7 +243,7 @@
                         // Wait for modal to open, then initialize cropper
                         cropModal._element.addEventListener('shown.bs.modal', function() {
                             if (cropper) cropper
-                        .destroy(); // Destroy previous instance if exists
+                                .destroy(); // Destroy previous instance if exists
                             cropper = new Cropper(image, {
                                 aspectRatio: 350 / 260,
                                 viewMode: 2,

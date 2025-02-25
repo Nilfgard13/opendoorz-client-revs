@@ -123,7 +123,7 @@
             </div>
 
             <div class="row properties-box">
-                @foreach ($property->take(9) as $user)
+                @foreach ($property as $user)
                     <div
                         class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv {{ $user->categoryType->name }}">
                         <div class="item">
@@ -156,7 +156,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-12">
                     <ul class="pagination">
                         <li><a class="is_active" href="#">1</a></li>
@@ -165,10 +165,170 @@
                         <li><a href="#">>></a></li>
                     </ul>
                 </div>
+            </div> --}}
+
+            <div class="row">
+                <div class="col-lg-12">
+                    @if ($property->hasPages())
+                        <div class="pagination-wrapper">
+                            <ul class="pagination">
+                                {{-- Previous Page Link --}}
+                                @if ($property->onFirstPage())
+                                    <li class="page-item disabled">
+                                        <span class="page-link">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $property->previousPageUrl() }}">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($property->getUrlRange(1, $property->lastPage()) as $page => $url)
+                                    @if ($page == $property->currentPage())
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ $page }}</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($property->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $property->nextPageUrl() }}">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled">
+                                        <span class="page-link">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    @endif
+                </div>
             </div>
+
         </div>
     </div>
+    <style>
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
 
+        .pagination {
+            display: inline-flex;
+            align-items: center;
+            background: #ffffff;
+            padding: 8px;
+            border-radius: 100px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            gap: 4px;
+        }
+
+        .page-item {
+            display: inline-flex;
+            margin: 0;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            background: transparent;
+            border: none;
+            border-radius: 100px;
+            transition: all 0.2s ease;
+        }
+
+        .page-item:not(.active):not(.disabled) .page-link:hover {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .page-item.active .page-link {
+            background-color: #354dbd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #9ca3af;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* SVG icons styling */
+        .page-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .pagination {
+                padding: 6px;
+            }
+
+            .page-link {
+                width: 32px;
+                height: 32px;
+                font-size: 13px;
+            }
+
+            .page-link svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        /* Touch Device Optimization */
+        @media (hover: none) {
+            .page-link {
+                padding: 0;
+            }
+        }
+
+        /* Focus States */
+        .page-link:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+    </style>
     <style>
         /* Base Styles */
         .search-container {

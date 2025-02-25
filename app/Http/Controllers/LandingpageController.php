@@ -10,7 +10,7 @@ class LandingpageController extends Controller
 {
     public function homeIndex(Request $request)
     {
-        $property = Property::orderBy('id', 'desc')->get(); // Mengurutkan dari yang terbaru
+        $property = Property::orderBy('id', 'desc')->get();
 
         $title = 'Home Page';
 
@@ -22,37 +22,30 @@ class LandingpageController extends Controller
         $search = $request->input('search');
         $types = CategoryType::all();
 
-        $property = Property::when($search, function ($query, $search) {
-            return $query->where('title', 'LIKE', "%{$search}%")
-                ->orWhere('description', 'LIKE', "%{$search}%")
-                ->orWhere('price', 'LIKE', "%{$search}%")
-                ->orWhere('address', 'LIKE', "%{$search}%")
-                ->orWhereHas('categoryType', function ($query) use ($search) {
-                    $query->where('name', 'LIKE', "%{$search}%");
-                })
-                ->orWhereHas('categoryLocation', function ($query) use ($search) {
-                    $query->where('name', 'LIKE', "%{$search}%");
-                });
-        })->orderBy('id', 'desc')->get();
+        $property = Property::where('status', 'available')
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%")
+                    ->orWhere('price', 'LIKE', "%{$search}%")
+                    ->orWhere('address', 'LIKE', "%{$search}%")
+                    ->orWhere('parking', 'LIKE', "%{$search}%")
+                    ->orWhereHas('categoryType', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereHas('categoryLocation', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', "%{$search}%");
+                    });
+            })->orderBy('id', 'desc')->paginate(9);
 
         $title = 'Property Page';
 
         return view('user.property', compact('property', 'title', 'types'));
     }
 
-    // public function typeIndex(Request $request)
-    // {
-    //     $property = Property::all();
-
-    //     $title = 'Property Page';
-
-    //     return view('user.property', compact('property', 'title'));
-    // }
-
     public function detailsIndex($id)
     {
         $property = Property::findOrFail($id);
-        $title = 'Home Page';
+        $title = 'Detail Page';
         return view('user.details-property', compact('property', 'title'));
     }
 }

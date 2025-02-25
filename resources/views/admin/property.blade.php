@@ -50,7 +50,7 @@
                                 <th scope="col">Title</th>
                                 {{-- <th scope="col">Image</th> --}}
                                 <th scope="col">Price</th>
-                                <th scope="col">Location</th>
+                                <th scope="col">City Location</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
@@ -118,6 +118,12 @@
                                                             <div class="border-start ps-2 border-3 border-primary">
                                                                 <strong>Bathrooms:</strong>
                                                                 <span class="ms-2">{{ $user->bathrooms }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 d-flex">
+                                                            <div class="border-start ps-2 border-3 border-primary">
+                                                                <strong>Parking:</strong>
+                                                                <span class="ms-2">{{ $user->parking ?? 'N/A' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
