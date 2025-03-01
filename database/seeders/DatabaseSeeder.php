@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             CategoryType::class,
             ReviewSeeder::class,
             PropertySeeder::class,
+            LandingPageSeeder::class,
         ]);
     }
 }

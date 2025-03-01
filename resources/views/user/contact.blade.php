@@ -47,11 +47,11 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/property">Properties</a></li>
+                            <li><a href="/">Beranda</a></li>
+                            <li><a href="/property">Properti</a></li>
                             {{-- <li><a href="/details-property">Property Details</a></li> --}}
-                            <li><a href="/contact" class="active">Contact Us</a></li>
-                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
+                            <li><a href="/contact" class="active">Kontak kami</a></li>
+                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Hubungi Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -68,8 +68,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <span class="breadcrumb"><a href="#">Home</a> / Contact Us</span>
-                    <h3>Contact Us</h3>
+                    <span class="breadcrumb"><a href="#">Home</a> / Kontak kami</span>
+                    <h3>Kontak kami</h3>
                 </div>
             </div>
         </div>
@@ -80,26 +80,27 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-heading">
-                        <h6>| Contact Us</h6>
-                        <h2>Get In Touch With Our Agents</h2>
+                        <h6>| Hubungi Kami</h6>
+                        <h2>Terhubung dengan Konsultan Kami</h2>
                     </div>
-                    <p>When you really need to download free CSS templates, please remember our website TemplateMo.
-                        Also, tell your friends about our website. Thank you for visiting. There is a variety of
-                        Bootstrap HTML CSS templates on our website. If you need more information, please contact us.
+                    <p>Ketika Anda membutuhkan bantuan dari para ahli, jangan ragu untuk menghubungi konsultan kami. Tim
+                        profesional kami siap memberikan solusi terbaik sesuai kebutuhan Anda. Hubungi kami sekarang
+                        untuk konsultasi lebih lanjut dan dapatkan layanan terbaik dari kami.
                     </p>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="item phone">
                                 <img src="user/assets/images/icons8-phone-100.png" alt=""
                                     style="max-width: 52px;">
-                                <h6>010-020-0340<br><span>Phone Number</span></h6>
+                                <h6>0{{ $landingPage->number }}<br><span>Phone Number</span></h6>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="item email">
                                 <img src="user/assets/images/icons8-email-100.png" alt=""
                                     style="max-width: 52px;">
-                                <h6>info@villa.co<br><span>Business Email</span></h6>
+                                <h6 style="font-size: 13pt">{{ $landingPage->email }}<br><span>Business Email</span>
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -113,13 +114,15 @@
                 <div class="col-lg-6">
                     <form id="contact-form" action="{{ route('review.store') }}" method="POST">
                         @csrf
+                        <h3>Ulas Pelayanan Kami</h3>
+                        <br>
                         <div class="row">
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <label for="name">Full Name</label>
+                                    <label for="name">Nama Lengkap</label>
                                     <input type="text" name="name" id="name"
                                         class="form-control @error('name') is-invalid @enderror"
-                                        placeholder="Your Name..." autocomplete="on" required
+                                        placeholder="Nama Anda..." autocomplete="on" required
                                         value="{{ old('name') }}">
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -128,10 +131,10 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <label for="email">Email Address</label>
+                                    <label for="email">Alamat Email</label>
                                     <input type="email" name="email" id="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="Your E-mail..." required value="{{ old('email') }}">
+                                        placeholder="Email Anda..." required value="{{ old('email') }}">
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -139,9 +142,9 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <label for="nomor">Nomor</label>
+                                    <label for="nomor">Nomor Handphone</label>
                                     <input type="number" name="nomor" id="nomor"
-                                        class="form-control @error('nomor') is-invalid @enderror" placeholder="No HP"
+                                        class="form-control @error('nomor') is-invalid @enderror" placeholder="Nomer Anda..."
                                         autocomplete="on" required value="{{ old('nomor') }}">
                                     @error('nomor')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -150,9 +153,9 @@
                             </div>
                             <div class="col-lg-12">
                                 <fieldset>
-                                    <label for="deskripsi">Deskripsi</label>
+                                    <label for="deskripsi">Ulasan</label>
                                     <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
-                                        placeholder="Your Message">{{ old('deskripsi') }}</textarea>
+                                        placeholder="Ulasan Anda...">{{ old('deskripsi') }}</textarea>
                                     @error('deskripsi')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -170,7 +173,7 @@
                 <div class="col-lg-12">
                     <div id="map">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12469.776493332698!2d-80.14036379941481!3d25.907788681148624!2m3!1f357.26927939317244!2f20.870722720054623!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x88d9add4b4ac788f%3A0xe77469d09480fcdb!2sSunny%20Isles%20Beach!5e1!3m2!1sen!2sth!4v1642869952544!5m2!1sen!2sth"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2989.9181495592356!2d112.60476565245528!3d-7.944156799745218!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78826c66a7e6df%3A0x2b4c8886fafaca5b!2sTaman%20Singha%20Merjosari!5e0!3m2!1sid!2sid!4v1740618102852!5m2!1sid!2sid"
                             width="100%" height="500px" frameborder="0"
                             style="border:0; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);"
                             allowfullscreen=""></iframe>

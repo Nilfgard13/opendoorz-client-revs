@@ -14,9 +14,9 @@ class CategoryType extends Seeder
     public function run(): void
     {
         $data = [
-            ['name' => 'Appartemen', 'description' => 'ini adalah Appartemen'],
-            ['name' => 'Villa', 'description' => 'ini adalah Villa'],
-            ['name' => 'Rumah', 'description' => 'ini adalah Rumah'],
+            ['name' => 'Appartemen', 'description' => 'appartemen'],
+            ['name' => 'Villa Bukit Ubud', 'description' => 'villa'],
+            ['name' => 'Rumah Bukit Ubud', 'description' => 'rumah'],
         ];
 
         foreach ($data as $item) {

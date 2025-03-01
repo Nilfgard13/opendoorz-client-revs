@@ -14,13 +14,15 @@ use App\Http\Controllers\CategoryLocationController;
 Route::get('/', [LandingpageController::class, 'homeIndex'])->name('user.index');
 Route::get('/details-property/{id}', [LandingpageController::class, 'detailsIndex'])->name('user.show');
 Route::get('/property', [LandingpageController::class, 'propertyIndex'])->name('user.propertyIndex');
+Route::get('/contact', [LandingpageController::class, 'contactIndex'])->name('user.contactIndex');
 
-Route::get('/contact', function () {
-    return view('user/contact', ['title' => 'Contact']);
-});
+// Route::get('/contact', function () {
+//     return view('user/contact', ['title' => 'Contact']);
+// });
 
 //admin
 Route::get('/home-admin', [DashboardController::class, 'countProperties'])->name('admin.dashboard');
+Route::post('/landing-page-update', [DashboardController::class, 'insertLandingPage'])->name('landingPage.insert');
 
 //user-admin
 Route::get('/user-admin', [UserController::class, 'index'])->name('users.index');

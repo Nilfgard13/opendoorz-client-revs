@@ -44,7 +44,7 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Type Code</th>
                                 {{-- <th scope="col">Created at</th>
                                 <th scope="col">Updated at</th> --}}
                                 <th scope="col">Action</th>

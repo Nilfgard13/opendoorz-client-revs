@@ -47,11 +47,11 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/property" class="active">Properties</a></li>
+                            <li><a href="/">Beranda</a></li>
+                            <li><a href="/property" class="active">Properti</a></li>
                             {{-- <li><a href="/details-property">Property Details</a></li> --}}
-                            <li><a href="/contact">Contact Us</a></li>
-                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Contact Admin</a></li>
+                            <li><a href="/contact">Kontak Kami</a></li>
+                            <li><a href="/show-link"><i class="fab fa-whatsapp fa-lg"></i> Hubungi Admin</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -68,8 +68,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <span class="breadcrumb"><a href="#">Home</a> / Properties</span>
-                    <h3>Properties</h3>
+                    <span class="breadcrumb"><a href="#">Home</a> / Properti</span>
+                    <h3>Properti</h3>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
                 </li>
                 @foreach ($types as $type)
                     <li>
-                        <a href="#!" data-filter=".{{ $type->name }}">{{ $type->name }}</a>
+                        <a href="#!" data-filter=".{{ $type->description }}">{{ $type->name }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -125,7 +125,7 @@
             <div class="row properties-box">
                 @foreach ($property as $user)
                     <div
-                        class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv {{ $user->categoryType->name }}">
+                        class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv {{ $user->categoryType->description }}">
                         <div class="item">
                             @php
                                 $images = json_decode($user->images, true);
@@ -143,14 +143,14 @@
                                 <a href="{{ route('user.show', $user->id) }}">{{ $user->title }}</a>
                             </h4>
                             <ul>
-                                <li>Bedrooms: <span>{{ $user->bedrooms }}</span></li>
-                                <li>Bathrooms: <span>{{ $user->bathrooms }}</span></li>
+                                <li>Kamar tidur: <span>{{ $user->bedrooms }}</span></li>
+                                <li>Kamar mandi: <span>{{ $user->bathrooms }}</span></li>
                                 <li>Area: <span>{{ $user->area }}m²</span></li>
-                                <li>Floor: <span>{{ $user->floor }}</span></li>
-                                <li>Parking: <span>{{ $user->parking ?? 'N/A' }}</span></li>
+                                <li>Lantai: <span>{{ $user->floor }}</span></li>
+                                <li>Garasi: <span>{{ $user->parking ?? 'N/A' }}</span></li>
                             </ul>
                             <div class="main-button">
-                                <a href="/show-link">Contact Admin</a>
+                                <a href="{{ route('user.show', $user->id) }}">Detail Properti</a>
                             </div>
                         </div>
                     </div>
