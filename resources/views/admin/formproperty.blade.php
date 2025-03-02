@@ -25,7 +25,7 @@
                                 class="p-4">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="title" class="form-label">Property Title</label>
+                                    <label for="title" class="form-label">Property Title *maks 15 karakter*</label>
                                     <input type="text" class="form-control @error('title') is-invalid @enderror"
                                         id="title" name="title" value="{{ old('title') }}"
                                         placeholder="Enter property title" required>
@@ -34,8 +34,17 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                                        rows="3" placeholder="Enter property description" required>{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div> --}}
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description (limit hanya 2 paragraf)</label>
                                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
                                         rows="3" placeholder="Enter property description" required>{{ old('description') }}</textarea>
                                     @error('description')
@@ -44,7 +53,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Price (Rp)</label>
+                                    <label for="price" class="form-label">Price (Rp) *maks angka 10 digit*</label>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
                                         id="price" name="price" value="{{ old('price') }}"
                                         placeholder="Enter price" min="0" required>
@@ -315,124 +324,19 @@
         });
     </script>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let cropper;
-            let selectedFile;
-
-            document.getElementById('images').addEventListener('change', function(event) {
-                const file = event.target.files[0];
-
-                if (file) {
-                    selectedFile = file;
-                    const reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        const image = document.getElementById('cropImage');
-                        image.src = e.target.result;
-
-                        // Tampilkan modal crop
-                        const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
-                        cropModal.show();
-
-                        // Tunggu modal terbuka, lalu inisialisasi cropper
-                        cropModal._element.addEventListener('shown.bs.modal', function() {
-                            if (cropper) cropper
-                                .destroy(); // Hancurkan instance sebelumnya jika ada
-                            cropper = new Cropper(image, {
-                                aspectRatio: 350 / 260, // Set rasio crop
-                                viewMode: 2,
-                                scalable: true,
-                                zoomable: true,
-                                background: false
-                            });
-                        });
-                    };
-
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            // Event untuk menyimpan hasil cropping
-            document.getElementById('cropAndSave').addEventListener('click', function() {
-                if (cropper) {
-                    const highResCanvas = cropper.getCroppedCanvas({
-                        width: 1400, // 4x ukuran asli (untuk detail tinggi)
-                        height: 1040,
-                        imageSmoothingEnabled: true,
-                        imageSmoothingQuality: 'high',
-                        willReadFrequently: true
-                    });
-
-                    // Resize ke ukuran final
-                    const finalCanvas = document.createElement('canvas');
-                    finalCanvas.width = 700; // Final 2x ukuran asli
-                    finalCanvas.height = 520;
-                    const ctx = finalCanvas.getContext('2d', {
-                        willReadFrequently: true
-                    });
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(highResCanvas, 0, 0, 700, 520);
-
-                    // Konversi ke Blob (WebP untuk kualitas lebih baik & ukuran lebih kecil)
-                    finalCanvas.toBlob(function(blob) {
-                        const url = URL.createObjectURL(blob);
-
-                        // Tampilkan hasil cropping di preview
-                        const previewContainer = document.getElementById('imagePreview');
-                        const preview = document.createElement('div');
-                        preview.classList.add('col-md-4');
-                        preview.innerHTML = `<img src="${url}" class="img-fluid rounded">`;
-                        previewContainer.appendChild(preview);
-
-                        // Simpan ke input file (opsional jika ingin dikirim ke backend)
-                        const fileInput = document.getElementById('images');
-                        const dataTransfer = new DataTransfer();
-                        dataTransfer.items.add(new File([blob], selectedFile.name.replace(
-                            /\.[^/.]+$/, ".webp"), {
-                            type: 'image/webp'
-                        }));
-                        fileInput.files = dataTransfer.files;
-
-                        // Tutup modal
-                        const cropModal = bootstrap.Modal.getInstance(document.getElementById(
-                            'cropModal'));
-                        cropModal.hide();
-                    }, 'image/webp', 1.0); // WebP dengan kualitas maksimal
-                }
+    <script>
+        $(document).ready(function() {
+            $('#description').summernote({
+                placeholder: 'Enter property description',
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                ]
             });
         });
-    </script> --}}
-
-    {{-- <script>
-        document.getElementById('images').addEventListener('change', function(event) {
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = ''; // Clear existing previews
-
-            const files = event.target.files;
-
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                if (file) {
-                    // Create preview container
-                    const col = document.createElement('div');
-                    col.className = 'col-md-4';
-
-                    // Create image element
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(file);
-                    img.className = 'img-fluid rounded';
-                    img.style.height = '200px';
-                    img.style.objectFit = 'cover';
-
-                    // Add to preview
-                    col.appendChild(img);
-                    preview.appendChild(col);
-                }
-            }
-        });
-    </script> --}}
+    </script>
 
     <script>
         function changeBackground(select) {

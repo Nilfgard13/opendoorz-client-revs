@@ -25,7 +25,7 @@
                                 @method('PUT')
 
                                 <div class="mb-3">
-                                    <label for="title" class="form-label">Property Title</label>
+                                    <label for="title" class="form-label">Property Title *maks 15 karakter*</label>
                                     <input type="text" class="form-control @error('title') is-invalid @enderror"
                                         id="title" name="title" value="{{ old('title', $property->title) }}"
                                         placeholder="Enter property title" required>
@@ -34,8 +34,17 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                                        rows="3" placeholder="Enter property description" required>{{ old('description', $property->description) }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div> --}}
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description (limit hanya 2 paragraf)</label>
                                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
                                         rows="3" placeholder="Enter property description" required>{{ old('description', $property->description) }}</textarea>
                                     @error('description')
@@ -44,7 +53,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Price (Rp)</label>
+                                    <label for="price" class="form-label">Price (Rp) *maks 10 digit*</label>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
                                         id="price" name="price" value="{{ old('price', $property->price) }}"
                                         placeholder="Enter price" min="0" required>
@@ -177,43 +186,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                                <!-- Untuk images -->
-                                {{-- <div class="mb-3">
-                                    <label for="images" class="form-label">Property Images</label>
-                                    <input type="file"
-                                        class="form-control @error('images.*') is-invalid @enderror" id="images"
-                                        name="images[]" accept="image/*" multiple>
-                                    @error('images.*')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-
-                                    <!-- Preview gambar yang sudah ada -->
-                                    <div class="mt-3">
-                                        <label>Current Images:</label>
-                                        <div class="d-flex flex-wrap gap-2" id="existingImages">
-                                            @if ($property->images)
-                                                @foreach (json_decode($property->images) as $index => $image)
-                                                    <div class="position-relative">
-                                                        <img src="{{ asset('storage/' . $image) }}"
-                                                            alt="Property Image"
-                                                            style="width: 150px; height: 150px; object-fit: cover;"
-                                                            class="rounded border">
-                                                        <button type="button"
-                                                            class="btn btn-danger btn-sm position-absolute"
-                                                            style="top: 5px; right: 5px; border-radius: 50%; padding: 2px 6px;"
-                                                            onclick="removeExistingImage(this, '{{ $image }}')">×</button>
-                                                        <input type="hidden" name="existing_images[]"
-                                                            value="{{ $image }}">
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <!-- Preview gambar baru -->
-                                    <div id="imagePreview" class="mt-2 d-flex flex-wrap gap-2"></div>
-                                </div> --}}
 
                                 <div class="mb-4">
                                     <label for="images" class="form-label fw-semibold mb-2">Property Images</label>
@@ -468,93 +440,19 @@
         });
     </script>
 
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const imageInput = document.getElementById("images");
-            const imagePreview = document.getElementById("imagePreview");
-            let imageFiles = [];
-
-            imageInput.addEventListener("change", function() {
-                imageFiles = Array.from(imageInput.files);
-                updatePreview();
-            });
-
-            function updatePreview() {
-                imagePreview.innerHTML = "";
-
-                imageFiles.forEach((file, index) => {
-                    if (!file.type.startsWith("image/")) return;
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const div = document.createElement("div");
-                        div.classList.add("position-relative");
-
-                        div.innerHTML = `
-                        <div class="position-relative d-inline-block">
-                            <img src="${e.target.result}" alt="Preview" 
-                                 class="rounded border"
-                                 style="width: 150px; height: 150px; object-fit: cover;">
-                            <button type="button" 
-                                    class="btn btn-danger btn-sm position-absolute"
-                                    style="top: 5px; right: 5px; border-radius: 50%; padding: 2px 6px;"
-                                    onclick="removeNewImage(${index})">×</button>
-                        </div>
-                    `;
-                        imagePreview.appendChild(div);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-
-            window.removeNewImage = function(index) {
-                imageFiles.splice(index, 1);
-                const dt = new DataTransfer();
-                imageFiles.forEach(file => dt.items.add(file));
-                imageInput.files = dt.files;
-                updatePreview();
-            };
-
-            // Fungsi untuk menghapus gambar yang sudah ada
-            window.removeExistingImage = function(button, imagePath) {
-                // Tambahkan konfirmasi sebelum menghapus
-                if (confirm('Are you sure you want to remove this image?')) {
-                    const imageContainer = button.closest('.position-relative');
-
-                    // Buat input hidden untuk menyimpan gambar yang akan dihapus
-                    const deletedImageInput = document.createElement('input');
-                    deletedImageInput.type = 'hidden';
-                    deletedImageInput.name = 'deleted_images[]';
-                    deletedImageInput.value = imagePath;
-                    document.querySelector('form').appendChild(deletedImageInput);
-
-                    // Hapus container gambar dari DOM
-                    imageContainer.remove();
-                }
-            };
-        });
-    </script> --}}
-
-    {{-- <script>
-        document.getElementById('images').addEventListener('change', function(event) {
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = '';
-
-            Array.from(event.target.files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '150px';
-                    img.style.height = '150px';
-                    img.style.objectFit = 'cover';
-                    img.classList.add('rounded');
-                    preview.appendChild(img);
-                }
-                reader.readAsDataURL(file);
+    <script>
+        $(document).ready(function() {
+            $('#description').summernote({
+                placeholder: 'Enter property description',
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                ]
             });
         });
-    </script> --}}
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Tambahkan di bagian head dokumen HTML -->

@@ -46,9 +46,9 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:15',
             'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:9999999999',
             'bedrooms' => 'required|integer|min:1',
             'bathrooms' => 'required|integer|min:0',
             'area' => 'required|integer|min:0',
@@ -108,9 +108,9 @@ class PropertyController extends Controller
         }
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:15',
             'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:9999999999',
             'bedrooms' => 'required|integer|min:1',
             'bathrooms' => 'required|integer|min:0',
             'area' => 'required|integer|min:0',

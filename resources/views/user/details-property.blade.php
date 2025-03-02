@@ -97,7 +97,7 @@
                         <h4>{{ $property->title }}<br>
                             <p>{{ $property->address }}, {{ $property->categoryLocation->name }}</p>
                         </h4>
-                        <p>{{ $property->description }}
+                        <p>{!! nl2br($property->description) !!}
                         </p>
                     </div>
                     <div class="accordion" id="accordionExample">
