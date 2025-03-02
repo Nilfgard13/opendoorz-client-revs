@@ -42,7 +42,7 @@ class ReviewController extends Controller
             'deskripsi' => $request->deskripsi,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'User deleted successfully');
+        return redirect()->route('user.index')->with('success', 'Review Anda Terkirim');
     }
 
     // // Update a user
@@ -80,6 +80,6 @@ class ReviewController extends Controller
         }
 
         $review->delete();
-        return redirect()->route('review.index')->with('success', 'User deleted successfully');
+        return redirect()->route('review.index')->with('success', 'Review deleted successfully');
     }
 }

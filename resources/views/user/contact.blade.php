@@ -18,16 +18,16 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <ul class="info">
-                        <li><i class="fa fa-envelope"></i> info@company.com</li>
-                        <li><i class="fa fa-map"></i> Sunny Isles Beach, FL 33160</li>
+                        <li><i class="fa fa-envelope"></i> {{ $landingPage->email ?? 'info@company.com' }}</li>
+                        <li><i class="fa fa-map"></i> {{ $landingPage->address ?? 'No address Added' }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <ul class="social-links">
                         {{-- <li><a href="#"><i class="fab fa-facebook"></i></a></li>
                         <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li> --}}
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="{{ $landingPage->url }}"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="{{ $landingPage->url_ig }}"><i class="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -92,25 +92,25 @@
                             <div class="item phone">
                                 <img src="user/assets/images/icons8-phone-100.png" alt=""
                                     style="max-width: 52px;">
-                                <h6>0{{ $landingPage->number }}<br><span>Phone Number</span></h6>
+                                <h6>{{ $landingPage->number ?? '0000-0000-0000' }}<br><span>Phone Number</span></h6>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="item email">
                                 <img src="user/assets/images/icons8-email-100.png" alt=""
                                     style="max-width: 52px;">
-                                <h6 style="font-size: 13pt">{{ $landingPage->email }}<br><span>Business Email</span>
+                                <h6 style="font-size: 13pt">{{ $landingPage->email ?? 'info@company.com' }}<br><span>Business Email</span>
                                 </h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                @if (session('success'))
+                {{-- @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                @endif
+                @endif --}}
                 <div class="col-lg-6">
                     <form id="contact-form" action="{{ route('review.store') }}" method="POST">
                         @csrf
@@ -144,8 +144,9 @@
                                 <fieldset>
                                     <label for="nomor">Nomor Handphone</label>
                                     <input type="number" name="nomor" id="nomor"
-                                        class="form-control @error('nomor') is-invalid @enderror" placeholder="Nomer Anda..."
-                                        autocomplete="on" required value="{{ old('nomor') }}">
+                                        class="form-control @error('nomor') is-invalid @enderror"
+                                        placeholder="Nomer Anda..." autocomplete="on" required
+                                        value="{{ old('nomor') }}">
                                     @error('nomor')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -161,6 +162,13 @@
                                     @enderror
                                 </fieldset>
                             </div>
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    {{-- <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button> --}}
+                                </div>
+                            @endif
                             <div class="col-lg-12">
                                 <fieldset>
                                     <button type="submit" id="form-submit" class="btn btn-primary">Send

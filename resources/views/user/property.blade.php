@@ -18,16 +18,16 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <ul class="info">
-                        <li><i class="fa fa-envelope"></i> info@company.com</li>
-                        <li><i class="fa fa-map"></i> Sunny Isles Beach, FL 33160</li>
+                        <li><i class="fa fa-envelope"></i> {{ $landingPage->email ?? 'info@company.com' }}</li>
+                        <li><i class="fa fa-map"></i> {{ $landingPage->address ?? 'No Address Added' }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <ul class="social-links">
                         {{-- <li><a href="#"><i class="fab fa-facebook"></i></a></li>
                         <li><a href="https://x.com/minthu" target="_blank"><i class="fab fa-twitter"></i></a></li> --}}
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="{{ $landingPage->url }}"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="{{ $landingPage->url_ig }}"><i class="fab fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -123,49 +123,45 @@
             </div>
 
             <div class="row properties-box">
-                @foreach ($property as $user)
-                    <div
-                        class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv {{ $user->categoryType->description }}">
-                        <div class="item">
-                            @php
-                                $images = json_decode($user->images, true);
-                                $imageSrc =
-                                    $images && count($images) > 0
-                                        ? asset('storage/' . $images[0])
-                                        : 'user/assets/images/default-images.png';
-                            @endphp
-                            <a href="{{ route('user.show', $user->id) }}">
-                                <img src="{{ $imageSrc }}" alt="Property Image" width="350" height="260">
-                            </a>
-                            <span class="category">{{ $user->categoryType->name }}</span>
-                            <h6>Rp. {{ number_format($user->price, 2) }}</h6>
-                            <h4>
-                                <a href="{{ route('user.show', $user->id) }}">{{ $user->title }}</a>
-                            </h4>
-                            <ul>
-                                <li>Kamar tidur: <span>{{ $user->bedrooms }}</span></li>
-                                <li>Kamar mandi: <span>{{ $user->bathrooms }}</span></li>
-                                <li>Area: <span>{{ $user->area }}m²</span></li>
-                                <li>Lantai: <span>{{ $user->floor }}</span></li>
-                                <li>Garasi: <span>{{ $user->parking ?? 'N/A' }}</span></li>
-                            </ul>
-                            <div class="main-button">
-                                <a href="{{ route('user.show', $user->id) }}">Detail Properti</a>
+                @if ($property->count() > 0)
+                    @foreach ($property as $user)
+                        <div
+                            class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv {{ $user->categoryType->description }}">
+                            <div class="item">
+                                @php
+                                    $images = json_decode($user->images, true);
+                                    $imageSrc =
+                                        $images && count($images) > 0
+                                            ? asset('storage/' . $images[0])
+                                            : 'user/assets/images/default-images.png';
+                                @endphp
+                                <a href="{{ route('user.show', $user->id) }}">
+                                    <img src="{{ $imageSrc }}" alt="Property Image" width="350" height="260">
+                                </a>
+                                <span class="category">{{ $user->categoryType->name }}</span>
+                                <h6>Rp. {{ number_format($user->price, 2) }}</h6>
+                                <h4>
+                                    <a href="{{ route('user.show', $user->id) }}">{{ $user->title }}</a>
+                                </h4>
+                                <ul>
+                                    <li>Kamar tidur: <span>{{ $user->bedrooms }}</span></li>
+                                    <li>Kamar mandi: <span>{{ $user->bathrooms }}</span></li>
+                                    <li>Area: <span>{{ $user->area }}m²</span></li>
+                                    <li>Lantai: <span>{{ $user->floor }}</span></li>
+                                    <li>Garasi: <span>{{ $user->parking ?? 'N/A' }}</span></li>
+                                </ul>
+                                <div class="main-button">
+                                    <a href="{{ route('user.show', $user->id) }}">Detail Properti</a>
+                                </div>
                             </div>
                         </div>
+                    @endforeach
+                @else
+                    <div class="col-12 text-center mt-4">
+                        <h5 class="text-muted">Belum ada property yang ditambahkan</h5>
                     </div>
-                @endforeach
+                @endif
             </div>
-            {{-- <div class="row">
-                <div class="col-lg-12">
-                    <ul class="pagination">
-                        <li><a class="is_active" href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">>></a></li>
-                    </ul>
-                </div>
-            </div> --}}
 
             <div class="row">
                 <div class="col-lg-12">

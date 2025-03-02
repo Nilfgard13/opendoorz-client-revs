@@ -1,8 +1,29 @@
 <x-layout_admin>
     <x-slot:title>{{ $title }}</x-slot:title>
     <!--  Row 1 -->
+    <div class="alert alert-warning" role="alert">
+        <h5 class="fw-bold"><i class="fas fa-exclamation-triangle"></i> Peringatan!</h5><br>
+        <p>System admin ini masih kurang optimal. Harap perhatikan hal berikut:</p>
+        <ul class="mb-0">
+            <li>1. Semua fitur upload hanya di setting untuk upload 1 gambar. Untuk fitur upload gambar pada
+                <strong>edit</strong> mohon hapus gambar terlebih dahulu dengan klik
+                tombol silang pada pojok gambar lalu anda bisa upload gambar.</li>
+            <li>2. Pengisian alamat cukup dengan nama jalan saja (Jl. Puri Indah No. 45), karena kolom nama kota sudah
+                disediakan
+                terpisah namun anda bisa mengisikan data selain data kota.</li>
+            <li>3. Tersedia manajemen kategori berdasarkan tipe perumahan dan kategori berdasarkan kota untuk penambahan
+                atau pengurangan filter/katalog data property.</li>
+            <li>4. Untuk melihat detail data, cukup klik data yang tersedia pada tabel.</li>
+            <li>5. Hanya data yang berstatus <strong>‘available’</strong> yang akan ditampilkan pada tampilan landing
+                page.</li>
+            <li>6. Setelah melakukan pencarian klik tombol <strong>‘refresh’</strong> untuk menampilkan semua data yang
+                tersedia.</li>
+        </ul>
+    </div>
+
     <div class="row">
         <div class="col-lg-12 d-flex align-items-strech">
+
             <div class="card w-100">
                 <div class="card-body">
                     <div class="d-sm-flex d-block align-items-center justify-content-between mb-3">
@@ -69,21 +90,23 @@
                                         @php
                                             $images = json_decode($user->images, true);
                                         @endphp
-
-                                        {{-- <td>
-                                            @if ($images)
-                                                @foreach ($images as $image)
-                                                    <img src="{{ asset('storage/' . $image) }}" alt="Property Image"
-                                                        width="100" class="m-1">
-                                                @endforeach
-                                            @else
-                                                <span>No images available</span>
-                                            @endif
-                                        </td> --}}
-                                        <td>${{ number_format($user->price, 2) }}</td>
+                                        <td>Rp. {{ number_format($user->price, 2) }}</td>
                                         <td>{{ $user->categoryLocation->name }}</td>
                                         <td>{{ $user->categoryType->name }}</td>
-                                        <td>{{ $user->status }}</td>
+                                        {{-- <td>{{ $user->status }}</td> --}}
+                                        <td>
+                                            @php
+                                                $statusColors = [
+                                                    'available' => 'success', // Hijau
+                                                    'sold' => 'danger', // Merah
+                                                    'reserved' => 'warning', // Kuning
+                                                    'on progress' => 'primary', // Biru
+                                                ];
+                                                $color = $statusColors[$user->status] ?? 'secondary'; // Default abu-abu jika status tidak ditemukan
+                                            @endphp
+                                            <span
+                                                class="badge bg-{{ $color }}">{{ ucfirst($user->status) }}</span>
+                                        </td>
                                         <td>
                                             <a href="{{ route('property.edit', $user->id) }}"
                                                 class="btn btn-outline-secondary m-1">Edit</a>
@@ -123,7 +146,8 @@
                                                         <div class="mb-3 d-flex">
                                                             <div class="border-start ps-2 border-3 border-primary">
                                                                 <strong>Parking:</strong>
-                                                                <span class="ms-2">{{ $user->parking ?? 'N/A' }}</span>
+                                                                <span
+                                                                    class="ms-2">{{ $user->parking ?? 'N/A' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>

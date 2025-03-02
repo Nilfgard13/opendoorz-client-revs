@@ -41,6 +41,7 @@ class LandingpageController extends Controller
     public function propertyIndex(Request $request)
     {
         $search = $request->input('search');
+        $landingPage = LandingPage::find(1);
         $types = CategoryType::all();
 
         $property = Property::where('status', 'available')
@@ -60,12 +61,13 @@ class LandingpageController extends Controller
 
         $title = 'Property Page';
 
-        return view('user.property', compact('property', 'title', 'types'));
+        return view('user.property', compact('property', 'title', 'types', 'landingPage'));
     }
 
     public function detailsIndex($id)
     {
         $property = Property::where('status', 'available')->findOrFail($id);
+        $landingPage = LandingPage::find(1);
         $otherProperties = Property::where('id', '!=', $property->id)
             ->where('status', 'available')
             ->inRandomOrder()
@@ -74,6 +76,6 @@ class LandingpageController extends Controller
 
         $title = 'Detail Page';
 
-        return view('user.details-property', compact('property', 'title', 'otherProperties'));
+        return view('user.details-property', compact('property', 'title', 'otherProperties', 'landingPage'));
     }
 }

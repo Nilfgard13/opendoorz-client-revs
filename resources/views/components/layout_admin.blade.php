@@ -8,7 +8,7 @@
     <x-title>{{ $title }}</x-title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="shortcut icon" type="image/png"
-        href="{{ asset('admin/assets/images/logos/Artboard 11 copy 4@300x.png') }}"/>
+        href="{{ asset('admin/assets/images/logos/Artboard 11 copy 4@300x.png') }}" />
     <link rel="stylesheet" href="{{ asset('admin/assets/css/styles.min.css') }}" />
 </head>
 
@@ -22,8 +22,8 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-center bg-primary p-3">
                     <a href="./index.html" class="text-nowrap logo-img">
-                        <img src="{{ asset('admin/assets/images/logos/Artboard 11 copy 3@300x.png') }}" width="180" alt="Logo"
-                            class="d-block mx-auto" />
+                        <img src="{{ asset('admin/assets/images/logos/Artboard 11 copy 3@300x.png') }}" width="180"
+                            alt="Logo" class="d-block mx-auto" />
                     </a>
                 </div>
 
@@ -148,8 +148,8 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{ asset('admin/assets/images/profile/user-1.jpg') }}" alt="" width="35"
-                                        height="35" class="rounded-circle">
+                                    <img src="{{ asset('admin/assets/images/profile/user-1.jpg') }}" alt=""
+                                        width="35" height="35" class="rounded-circle">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                     aria-labelledby="drop2">
@@ -188,6 +188,7 @@
                     <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a
                             href="https://themewagon.com">ThemeWagon</a></p>
+                    <p><b>*perhatian*</b> jika ada masalah terkait website ini bisa hubungi (081357477967)</p>
                 </div>
             </div>
         </div>

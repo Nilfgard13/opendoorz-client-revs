@@ -15,15 +15,15 @@ class LandingPageSeeder extends Seeder
     {
         $data = [
             [
-                'address' => null,
-                'number' => null,
-                'email' => null,
+                'address' => 'Jl. Puri Indah No. 45, Malang',
+                'number' => '0813-5747-7967',
+                'email' => "opendoorz@gmail.com",
                 'slogan' => null,
                 'images' => null,
-                'url' => null,
-                'url_ig' => null,
+                'url' => 'https://www.youtube.com/watch?v=PZddOGwjtFk&t=25s',
+                'url_ig' => 'https://www.instagram.com/opendoorz.id',
                 'thumbnails' => null,
-                'experience' => null,
+                'experience' => 4,
                 'gmap' => null,
             ],
         ];

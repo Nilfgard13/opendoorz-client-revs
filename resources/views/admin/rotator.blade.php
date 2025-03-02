@@ -1,6 +1,14 @@
 <x-layout_admin>
     <x-slot:title>{{ $title }}</x-slot:title>
     <!--  Row 1 -->
+    <div class="alert alert-warning" role="alert">
+        <h5 class="fw-bold"><i class="fas fa-exclamation-triangle"></i> Peringatan!</h5><br>
+        <p>System admin ini masih kurang optimal. Harap perhatikan hal berikut:</p>
+        <ul class="mb-0">
+            <li>1. Untuk pengisian nomer hp harap ganti angka awal dengan 62(081357477967 -> 6281357477967)</li>
+            <li>2. Setelah melakukan pencarian klik tombol <strong>‘refresh’</strong> untuk menampilkan semua data yang tersedia.</li>
+        </ul>
+    </div>
     <div class="row">
         <!-- Menampilkan pesan sukses -->
         @if (session('success'))

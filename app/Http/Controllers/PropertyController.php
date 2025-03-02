@@ -116,7 +116,7 @@ class PropertyController extends Controller
             'area' => 'required|integer|min:0',
             'floor' => 'required|integer|min:0',
             'address' => 'required|string|max:500',
-            'parking' => 'integer|min:0',
+            'parking' => 'nullable|integer|min:0',
             'status' => 'required|string',
             'category_type_id' => 'required|exists:category_types,id',
             'category_location_id' => 'required|exists:category_locations,id',

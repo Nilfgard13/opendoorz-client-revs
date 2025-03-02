@@ -10,7 +10,7 @@
                 <div class="icon-circle bg-success">
                     <i class="fas fa-house-chimney"></i>
                 </div>
-                <h5 class="fw-bold mt-3">{{ $propertyCounts['total'] }} Total Property</h5>
+                <h5 class="fw-bold mt-3">{{ $propertyCounts['available'] }} Available Property</h5>
                 {{-- <p class="text-muted">Lihat Detail</p> --}}
             </div>
         </div>
@@ -49,8 +49,8 @@
             <div class="card overflow-hidden"
                 style="background-color: rgba(33, 150, 243, 0.2); color: #0d47a1; border: none;">
                 <div class="card-body p-4 text-center">
-                    <h5 class="card-title mb-3 fw-semibold" style="font-size: 1.2rem;">Available On Sale Property</h5>
-                    <h4 class="fw-semibold mb-0" style="font-size: 1.5rem;">{{ $propertyCounts['available'] }}</h4>
+                    <h5 class="card-title mb-3 fw-semibold" style="font-size: 1.2rem;">Total Property</h5>
+                    <h4 class="fw-semibold mb-0" style="font-size: 1.5rem;">{{ $propertyCounts['total'] }}</h4>
                 </div>
             </div>
         </div>
@@ -69,12 +69,17 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Form Edit Landing Page</h5>
+                <h5 class="card-title fw-semibold mb-4">| Form Edit Landing Page</h5>
                 <div class="card">
+
                     <div class="card-body">
+                        <p class="text-danger">*Harap setiap anda mengklik tombol <b>update</b> untuk mengupload ulang
+                            gambar thumbnail youtube*</p>
                         <form method="POST" action="{{ route('landingPage.insert') }}" enctype="multipart/form-data">
                             @csrf
-
+                            <br>
+                            <h3>Company Profile Section</h3>
+                            <hr>
                             <div class="mb-3">
                                 <label for="address" class="form-label">Company Address</label>
                                 <input type="text" class="form-control" id="address" name="address"
@@ -83,7 +88,7 @@
 
                             <div class="mb-3">
                                 <label for="number" class="form-label">Company Number Phone</label>
-                                <input type="number" class="form-control" id="number" name="number"
+                                <input type="text" class="form-control" id="number" name="number"
                                     value="{{ $landingPage->number ?? '0' }}">
                             </div>
 
@@ -93,28 +98,10 @@
                                     value="{{ $landingPage->email ?? 'info@company.com' }}">
                             </div>
 
-                            {{-- <div class="mb-3">
-                                <label for="slogan" class="form-label">Header Slogan</label>
-                                <input type="text" class="form-control" id="slogan" name="slogan"
-                                    value="{{ $landingPage->slogan ?? 'empty' }}">
-                            </div> --}}
-
-                            <div class="mb-3">
-                                <label for="url" class="form-label">YouTube URL</label>
-                                <input type="text" class="form-control" id="url" name="url"
-                                    value="{{ $landingPage->url ?? 'https://www.youtube.com/' }}">
-                            </div>
-
                             <div class="mb-3">
                                 <label for="url-ig" class="form-label">Instagram URL</label>
                                 <input type="text" class="form-control" id="url-ig" name="url_ig"
                                     value="{{ $landingPage->url_ig ?? 'https://www.instagram.com/' }}">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="experience" class="form-label">Company Experience (Years)</label>
-                                <input type="number" class="form-control" id="experience" name="experience"
-                                    value="{{ $landingPage->experience ?? '0' }}">
                             </div>
 
                             <div class="mb-3">
@@ -123,34 +110,21 @@
                                     value="{{ $landingPage->gmap ?? 'empty' }}">
                             </div>
 
-                            {{-- <!-- Image Upload -->
-                            <div class="mb-4">
-                                <label for="images" class="form-label fw-semibold">Property Images (1600x800)</label>
-                                <input type="file" class="form-control" id="images" name="images[]"
-                                    accept="image/*" multiple>
-                            </div> --}}
+                            <div class="mb-3">
+                                <label for="experience" class="form-label">Company Experience (Years)</label>
+                                <input type="number" class="form-control" id="experience" name="experience"
+                                    value="{{ $landingPage->experience ?? '0' }}">
+                            </div>
 
-                            {{-- <div class="mb-4">
-                                <label for="thumbnails" class="form-label fw-semibold">Youtube thumbnails
-                                    (1070x480)</label>
-                                <input type="file" class="form-control" id="thumbnails" name="thumbnails[]"
-                                    accept="thumbnails/*">
+                            <br>
+                            <h3>Youtube Section</h3>
+                            <hr>
 
-                                <div class="mt-3">
-                                    <p>Current Image:</p>
-                                    @php
-                                        $images = !empty($landingPage->thumbnails)
-                                            ? json_decode($landingPage->thumbnails, true)
-                                            : [];
-                                        $imagePath =
-                                            !empty($images) && isset($images[0])
-                                                ? asset('storage/' . $images[0])
-                                                : asset('user/assets/images/video-frame.jpg');
-                                    @endphp
-                                    <img src="{{ $imagePath }}" alt="No Image" class="img-fluid"
-                                        style="max-width: 200px;">
-                                </div>
-                            </div> --}}
+                            <div class="mb-3">
+                                <label for="url" class="form-label">YouTube URL</label>
+                                <input type="text" class="form-control" id="url" name="url"
+                                    value="{{ $landingPage->url ?? 'https://www.youtube.com/' }}">
+                            </div>
 
                             <div class="mb-4">
                                 <label for="thumbnail_input" class="form-label fw-semibold">Youtube thumbnails
@@ -177,7 +151,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
+                                            {{-- <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="img-container" style="height: 400px;">
@@ -215,7 +189,79 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div> --}}
+                                            <div class="modal-body p-4">
+                                                <div class="row g-4">
+                                                    <!-- Main Image Area -->
+                                                    <div class="col-md-8">
+                                                        <div class="card h-100">
+                                                            <div class="card-header bg-light">
+                                                                <h5 class="card-title mb-0">Image Cropping Area</h5>
+                                                            </div>
+                                                            <div class="card-body p-0">
+                                                                <div class="img-container d-flex align-items-center justify-content-center"
+                                                                    style="height: 400px; border-radius: 0.25rem; overflow: hidden; background-color: #f8f9fa;">
+                                                                    <img id="image-to-crop" src=""
+                                                                        alt="Image to crop" class="img-fluid"
+                                                                        style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Preview Sidebar -->
+                                                    <div class="col-md-4">
+                                                        <div class="card h-100">
+                                                            <div class="card-header bg-light">
+                                                                <h5 class="card-title mb-0">Preview</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <!-- Preview Image -->
+                                                                <div class="mb-3">
+                                                                    <div class="preview-label mb-2 fw-bold">Preview
+                                                                        (1070×480):</div>
+                                                                    <div class="preview rounded"
+                                                                        style="width: 100%; height: 200px; border: 1px solid #dee2e6; overflow: hidden; background-color: #f8f9fa;">
+                                                                        <img id="preview-image" src=""
+                                                                            alt="Preview"
+                                                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Zoom Control -->
+                                                                <div class="mb-4">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-center mb-2">
+                                                                        <label for="zoom-range"
+                                                                            class="form-label mb-0 fw-bold">Zoom:</label>
+                                                                        <span id="zoom-value"
+                                                                            class="badge bg-primary">100%</span>
+                                                                    </div>
+                                                                    <input type="range" class="form-range"
+                                                                        id="zoom-range" min="0.1" max="3"
+                                                                        step="0.1" value="1">
+                                                                </div>
+
+                                                                <!-- Instructions -->
+                                                                <div class="mt-2">
+                                                                    <div class="crop-info p-3 bg-light rounded border">
+                                                                        <h6 class="mb-2">Instructions:</h6>
+                                                                        <ul class="mb-0 ps-3">
+                                                                            <li><small>Drag the image to
+                                                                                    position</small></li>
+                                                                            <li><small>Use mouse wheel to zoom</small>
+                                                                            </li>
+                                                                            <li><small>Aspect ratio locked to
+                                                                                    1070×480</small></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
@@ -255,7 +301,7 @@
                             </div>
 
                             <!-- Submit -->
-                            <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                 </div>
@@ -298,7 +344,17 @@
         }
     </style>
 
-
+    <style>
+        hr {
+            border: none;
+            height: 2px;
+            background-color: rgba(128, 128, 128, 0.5);
+            /* Warna abu-abu dengan opacity */
+            opacity: 0.7;
+            /* Menyesuaikan transparansi */
+            margin: 15px 0;
+        }
+    </style>
 
     <!-- CSS for Cropperjs -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">

@@ -147,10 +147,9 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="parking" class="form-label">Parking</label>
-                                    <input type="number"
-                                        class="form-control @error('parking') is-invalid @enderror" id="parking"
-                                        name="parking" value="{{ old('parking') }}" placeholder="Per Car"
-                                        min="1" required>
+                                    <input type="number" class="form-control @error('parking') is-invalid @enderror"
+                                        id="parking" name="parking" value="{{ old('parking') }}"
+                                        placeholder="Per Car" min="1" required>
                                     @error('parking')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -197,9 +196,15 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body text-center">
+                                            {{-- <div class="modal-body text-center">
                                                 <img id="cropImage" style="max-width: 100%;">
+                                            </div> --}}
+                                            <div class="modal-body text-center">
+                                                <div style="overflow: hidden; max-width: 100%;">
+                                                    <img id="cropImage" class="img-fluid">
+                                                </div>
                                             </div>
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
@@ -209,7 +214,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <button type="submit" class="btn btn-primary w-100">Add Property</button>
                             </form>

@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('landing_page', function (Blueprint $table) {
             $table->id();
             $table->string('address')->nullable();
-            $table->bigInteger('number')->nullable();
+            $table->string('number')->nullable();
             $table->string('email')->nullable();
             $table->string('slogan')->nullable();
             $table->json('images')->nullable();
             $table->string('url')->nullable();
             $table->string('url_ig')->nullable();
             $table->json('thumbnails')->nullable();
-            $table->bigInteger('experience')->nullable();
+            $table->string('experience')->nullable();
             $table->string('gmap')->nullable();
             $table->timestamps();
         });

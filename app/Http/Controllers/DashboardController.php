@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $propertyCounts = [
             'sold' => Property::where('status', 'sold')->count(),
-            'on_reserved' => Property::where('status', 'on reserved')->count(),
+            'on_reserved' => Property::where('status', 'reserved')->count(),
             'on_progress' => Property::where('status', 'on progress')->count(),
             'available' => Property::where('status', 'available')->count(),
             'total' => Property::count()
@@ -102,7 +102,7 @@ class DashboardController extends Controller
     {
         $request->validate([
             'address' => 'nullable|string|max:255',
-            'number' => 'nullable|numeric|min:0',
+            'number' => 'nullable|string|min:0',
             'email' => 'nullable|string|email|max:255',
             'slogan' => 'nullable|string|max:255',
             'url' => 'nullable|string|max:500',

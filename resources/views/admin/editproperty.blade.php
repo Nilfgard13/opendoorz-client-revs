@@ -146,7 +146,16 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="mb-3">
+                                    <label for="parking" class="form-label">Parking</label>
+                                    <input type="number" class="form-control @error('parking') is-invalid @enderror"
+                                        id="parking" name="parking"
+                                        value="{{ old('parking', $property->parking) }}" placeholder="Per Car"
+                                        min="1">
+                                    @error('parking')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="mb-3">
                                     <label for="status" class="form-label">Status</label>
                                     <select class="form-select @error('status') is-invalid @enderror" id="status"
@@ -248,8 +257,13 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body text-center">
+                                            {{-- <div class="modal-body text-center">
                                                 <img id="cropImage" style="max-width: 100%;">
+                                            </div> --}}
+                                            <div class="modal-body text-center">
+                                                <div style="overflow: hidden; max-width: 100%;">
+                                                    <img id="cropImage" class="img-fluid">
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"

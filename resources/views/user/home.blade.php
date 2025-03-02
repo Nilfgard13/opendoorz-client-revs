@@ -18,8 +18,8 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <ul class="info">
-                        <li><i class="fa fa-envelope"></i> {{ $landingPage->email }}</li>
-                        <li><i class="fa fa-map"></i> {{ $landingPage->address }}</li>
+                        <li><i class="fa fa-envelope"></i> {{ $landingPage->email ?? 'info@company.com' }}</li>
+                        <li><i class="fa fa-map"></i> {{ $landingPage->address ?? 'No Address Added' }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4">
@@ -113,7 +113,8 @@
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    Visi kami adalah menjadi <strong>agen real estate terpercaya</strong> yang menghubungkan pelanggan
+                                    Visi kami adalah menjadi <strong>agen real estate terpercaya</strong> yang
+                                    menghubungkan pelanggan
                                     dengan properti terbaik sesuai kebutuhan mereka. Misi kami adalah memberikan layanan
                                     profesional, transparan, dan inovatif untuk memastikan setiap transaksi properti
                                     berjalan lancar dan menguntungkan bagi semua pihak.</div>
@@ -129,7 +130,8 @@
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    Kami <strong>mengutamakan kualitas layanan</strong> dengan pendekatan personal, tim ahli yang
+                                    Kami <strong>mengutamakan kualitas layanan</strong> dengan pendekatan personal, tim
+                                    ahli yang
                                     berpengalaman, serta akses ke berbagai properti eksklusif. Dengan teknologi terkini
                                     dan jaringan luas, kami memastikan pelanggan mendapatkan pilihan properti terbaik
                                     dengan proses yang cepat dan mudah.
@@ -146,7 +148,8 @@
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    Tim kami terdiri dari <strong>profesional real estate dengan pengalaman bertahun-tahun</strong> dalam
+                                    Tim kami terdiri dari <strong>profesional real estate dengan pengalaman
+                                        bertahun-tahun</strong> dalam
                                     industri properti. Dengan keahlian dalam negosiasi, analisis pasar, dan layanan
                                     pelanggan, kami siap membantu pelanggan menemukan, membeli, atau menjual properti
                                     dengan strategi yang tepat.
@@ -162,16 +165,18 @@
                                 <h3>Pelayanan</h3>
                             </li>
                             <li>
-                                <img src="user/assets/images/home-insurance.png" alt="" style="max-width: 52px;">
+                                <img src="user/assets/images/home-insurance.png" alt=""
+                                    style="max-width: 52px;">
                                 <h4>Secure Area<br><span>24/7 Pos Satpam</span></h4>
                             </li>
                             <li>
-                                <img src="user/assets/images/house-clean.png" alt="" style="max-width: 52px;">
+                                <img src="user/assets/images/house-clean.png" alt=""
+                                    style="max-width: 52px;">
                                 <h4>Clean Area<br><span>Pengelolaan Sampah</span></h4>
                             </li>
                             <li>
                                 <img src="user/assets/images/type.png" alt="" style="max-width: 52px;">
-                                <h4>Type Property<br><span>Tersedia {{ $categoryCounts}} Tipe</span></h4>
+                                <h4>Type Property<br><span>Tersedia {{ $categoryCounts }} Tipe</span></h4>
                             </li>
                             <li>
                                 <img src="user/assets/images/online-payment.png" alt=""
@@ -244,8 +249,8 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="counter">
-                                    <h2 class="timer count-title count-number" data-to="{{ $propertyCounts['sold'] }}"
-                                        data-speed="1000"></h2>
+                                    <h2 class="timer count-title count-number"
+                                        data-to="{{ $propertyCounts['sold'] }}" data-speed="1000"></h2>
                                     <p class="count-text ">Properti<br>Terjual</p>
                                 </div>
                             </div>
@@ -338,7 +343,7 @@
                             <div class="item phone">
                                 <img src="user/assets/images/icons8-phone-100.png" alt=""
                                     style="max-width: 55px;">
-                                <h6 style="font-size: 14pt">0{{ $landingPage->number }}<br><span>Phone Number</span>
+                                <h6 style="font-size: 14pt">{{ $landingPage->number ?? '0000-0000-0000' }}<br><span>Phone Number</span>
                                 </h6>
                             </div>
                         </div>
@@ -346,19 +351,19 @@
                             <div class="item email">
                                 <img src="user/assets/images/icons8-email-100.png" alt=""
                                     style="max-width: 55px;">
-                                <h6 style="font-size: 12pt">{{ $landingPage->email }}<br><span>Business Email</span>
+                                <h6 style="font-size: 12pt">{{ $landingPage->email ?? 'info@company.com' }}<br><span>Business Email</span>
                                 </h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                @if (session('success'))
+                {{-- @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                             aria-label="Close"></button>
                     </div>
-                @endif
+                @endif --}}
                 <div class="col-lg-5">
                     <form id="contact-form" action="{{ route('review.store') }}" method="POST">
                         @csrf
@@ -409,6 +414,14 @@
                                     @enderror
                                 </fieldset>
                             </div>
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    {{-- <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button> --}}
+                                </div>
+                            @endif
+
                             <div class="col-lg-12">
                                 <fieldset>
                                     <button type="submit" id="form-submit" class="btn btn-primary">Send
@@ -417,6 +430,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
