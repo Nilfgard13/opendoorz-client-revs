@@ -11,7 +11,6 @@ class ReviewController extends Controller
     {
         $search = $request->input('search');
 
-        // Jika ada input pencarian, filter data
         $reviews = Review::when($search, function ($query, $search) {
             return $query->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%")
@@ -45,7 +44,6 @@ class ReviewController extends Controller
         return redirect()->route('user.index')->with('success', 'Review Anda Terkirim');
     }
 
-    // // Update a user
     // public function update(Request $request, $id)
     // {
     //     $review = Review::find($id);
@@ -60,13 +58,11 @@ class ReviewController extends Controller
     //         'deskripsi' => 'required|string|max:255',
     //     ]);
 
-    //     // Update data review
     //     $review->name = $request->name;
     //     $review->email = $request->email;
     //     $review->nomor = $request->nomor;
     //     $review->deskripsi = $request->deskripsi;
 
-    //     // Simpan perubahan
     //     $review->save();
 
     //     return redirect()->route('reviews.index')->with('success', 'Review updated successfully');

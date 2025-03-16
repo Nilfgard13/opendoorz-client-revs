@@ -42,10 +42,9 @@ class DashboardController extends Controller
             'thumbnails.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4016',
         ]);
 
-        // Hapus semua data di tabel LandingPage
         $landingPages = LandingPage::all();
         foreach ($landingPages as $landingPage) {
-            // Hapus gambar di storage
+
             $existingImages = json_decode($landingPage->images, true) ?? [];
             $existingThumbnails = json_decode($landingPage->thumbnails, true) ?? [];
 
@@ -57,14 +56,12 @@ class DashboardController extends Controller
                 Storage::disk('public')->delete($thumbnail);
             }
 
-            // Hapus record dari database
+
             $landingPage->delete();
         }
 
-        // Reset Auto Increment ke 1
         DB::statement('ALTER TABLE landing_page AUTO_INCREMENT = 1');
 
-        // Handle upload gambar baru
         $images = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {

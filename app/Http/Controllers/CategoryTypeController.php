@@ -11,7 +11,6 @@ class CategoryTypeController extends Controller
     {
         $search = $request->input('search');
 
-        // Jika ada input pencarian, filter data
         $category = CategoryType::when($search, function ($query, $search) {
             return $query->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('description', 'LIKE', "%{$search}%");
@@ -37,7 +36,6 @@ class CategoryTypeController extends Controller
         return redirect()->route('categorytype.index')->with('success', 'Category created successfully');
     }
 
-    // Update a user
     public function update(Request $request, $id)
     {
         $category = CategoryType::find($id);

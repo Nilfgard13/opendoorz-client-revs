@@ -12,7 +12,6 @@ class UserController extends Controller
     {
         $search = $request->input('search');
 
-        // Jika ada input pencarian, filter data
         $users = User::when($search, function ($query, $search) {
             return $query->where('username', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%")
@@ -43,7 +42,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
-    // Update a user
     public function update(Request $request, $id)
     {
         $user = User::find($id);

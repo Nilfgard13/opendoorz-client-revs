@@ -11,7 +11,6 @@ class CategoryLocationController extends Controller
     {
         $search = $request->input('search');
 
-        // Jika ada input pencarian, filter data
         $categorylocation = CategoryLocation::when($search, function ($query, $search) {
             return $query->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('description', 'LIKE', "%{$search}%");
@@ -37,7 +36,6 @@ class CategoryLocationController extends Controller
         return redirect()->route('categorylocation.index')->with('success', 'Category created successfully');
     }
 
-    // Update a user
     public function update(Request $request, $id)
     {
         $categorylocation = CategoryLocation::find($id);

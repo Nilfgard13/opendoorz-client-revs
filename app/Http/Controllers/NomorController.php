@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class NomorController extends Controller
 {
-    // Menampilkan daftar nomor
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -105,16 +104,13 @@ class NomorController extends Controller
 
     public function generateLink($id)
     {
-        // Text message to be sent
+
         $text = $this->chatShow($id);
 
-        // Admin WhatsApp numbers from the Nomor table
         $admins = Nomor::pluck('nomor')->toArray();
 
-        // File to store the current admin index
         $indexFile = 'admin_index.txt';
 
-        // Initialize index if file does not exist
         if (!file_exists(storage_path($indexFile))) {
             $currentIndex = 0;
             file_put_contents(storage_path($indexFile), $currentIndex);
@@ -122,28 +118,16 @@ class NomorController extends Controller
             $currentIndex = (int)file_get_contents(storage_path($indexFile));
         }
 
-        // Select the next admin
         $adminNumber = $admins[$currentIndex];
 
-        // Update the index for the next user
         $nextIndex = ($currentIndex + 1) % count($admins);
         file_put_contents(storage_path($indexFile), $nextIndex);
 
-        // Generate the WhatsApp URL
         $url = "https://api.whatsapp.com/send?phone=" . $adminNumber . "&text=" . urlencode($text);
         session()->flash('generated_url', $url);
 
         return $url;
     }
-
-    // public function showlink()
-    // {
-    //     // Call the generateLink method and get the URL
-    //     $url = $this->generateLink();  // or use $this->generateLink(); if it's in the same class
-
-    //     // Return the view with the generated URL
-    //     return redirect($url);
-    // }
 
     public function showlink($id = null)
     {
@@ -165,16 +149,13 @@ class NomorController extends Controller
 
     public function chatShow($id = null)
     {
-        // Jika $id adalah null atau tidak ditemukan, kembalikan string kosong
         if ($id === null) {
             return "";
         }
 
-        // Coba menemukan property, jika tidak ditemukan kembalikan string kosong
         try {
             $property = Property::findOrFail($id);
 
-            // Format harga dengan pemisah ribuan
             $formattedPrice = number_format($property->price, 0, ',', '.');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return "";

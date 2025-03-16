@@ -123,7 +123,6 @@ class PropertyController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
-        // Update basic property information
         $property->title = $request->title;
         $property->description = $request->description;
         $property->price = $request->price;
@@ -137,23 +136,19 @@ class PropertyController extends Controller
         $property->category_type_id = $request->category_type_id;
         $property->category_location_id = $request->category_location_id;
 
-        // Handle images
         $existingImages = json_decode($property->images) ?? [];
 
-        // Handle deleted images
         if ($request->has('deleted_images')) {
             foreach ($request->deleted_images as $deletedImage) {
-                // Hapus dari storage
+
                 Storage::disk('public')->delete($deletedImage);
 
-                // Hapus dari array existing images
                 $existingImages = array_filter($existingImages, function ($image) use ($deletedImage) {
                     return $image !== $deletedImage;
                 });
             }
         }
 
-        // Handle new images
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('property_images', 'public');
@@ -161,7 +156,6 @@ class PropertyController extends Controller
             }
         }
 
-        // Update property dengan gabungan gambar yang ada dan gambar baru
         $property->images = json_encode(array_values($existingImages));
 
         $property->save();
@@ -173,18 +167,15 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        // Hapus file gambar dari storage
         if ($property->images) {
             $images = json_decode($property->images, true);
             foreach ($images as $image) {
-                // Hapus file fisik dari storage
                 if (Storage::disk('public')->exists($image)) {
                     Storage::disk('public')->delete($image);
                 }
             }
         }
 
-        // Hapus data properti dari database
         $property->delete();
 
         return redirect()->route('property.index')->with('success', 'Property deleted successfully');
