@@ -87,6 +87,42 @@
         </div>
     </div>
 
+    {{-- <div class="main-banner">
+        <div class="owl-carousel owl-banner">
+            <div class="item">
+                <img src="{{ asset('images/IMG_2179.webp') }}"
+                    srcset="{{ asset('images/IMG_2179-600.webp') }} 600w,
+                             {{ asset('images/IMG_2179-1200.webp') }} 1200w"
+                    sizes="(max-width: 600px) 100vw, 50vw" alt="Beachfront Villa, Malang" class="banner-img">
+                <div class="header-text">
+                    <span class="category">Beachfront Villa, <em>Malang</em></span>
+                    <h2>Hurry!<br>Get the Best Villa for you</h2>
+                </div>
+            </div>
+            <div class="item">
+                <img src="{{ asset('images/IMG_2180.webp') }}"
+                    srcset="{{ asset('images/IMG_2180-600.webp') }} 600w,
+                             {{ asset('images/IMG_2180-1200.webp') }} 1200w"
+                    sizes="(max-width: 600px) 100vw, 50vw" alt="Luxury Villa, Malang" class="banner-img">
+                <div class="header-text">
+                    <span class="category">Luxury Villa, <em>Malang</em></span>
+                    <h2>Be Quick!<br>Get the best villa in town</h2>
+                </div>
+            </div>
+            <div class="item">
+                <img src="{{ asset('images/IMG_2183.webp') }}"
+                    srcset="{{ asset('images/IMG_2183-600.webp') }} 600w,
+                             {{ asset('images/IMG_2183-1200.webp') }} 1200w"
+                    sizes="(max-width: 600px) 100vw, 50vw" alt="Elegant Townhouse, Blitar" class="banner-img">
+                <div class="header-text">
+                    <span class="category">Elegant Townhouse, <em>Blitar</em></span>
+                    <h2>Act Now!<br>Get the highest level penthouse</h2>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+
     <div class="featured section">
         <div class="container">
             <div class="row">
@@ -141,12 +177,13 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    data-bs-target="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
                                     Tim dan pengalaman kami?
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                                data-bs-parent="#accordionExample">
+                            <div id="collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     Tim kami terdiri dari <strong>profesional real estate dengan pengalaman
                                         bertahun-tahun</strong> dalam
@@ -343,7 +380,8 @@
                             <div class="item phone">
                                 <img src="user/assets/images/icons8-phone-100.png" alt=""
                                     style="max-width: 55px;">
-                                <h6 style="font-size: 14pt">{{ $landingPage->number ?? '0000-0000-0000' }}<br><span>Phone Number</span>
+                                <h6 style="font-size: 14pt">
+                                    {{ $landingPage->number ?? '0000-0000-0000' }}<br><span>Phone Number</span>
                                 </h6>
                             </div>
                         </div>
@@ -351,7 +389,8 @@
                             <div class="item email">
                                 <img src="user/assets/images/icons8-email-100.png" alt=""
                                     style="max-width: 55px;">
-                                <h6 style="font-size: 12pt">{{ $landingPage->email ?? 'info@company.com' }}<br><span>Business Email</span>
+                                <h6 style="font-size: 12pt">
+                                    {{ $landingPage->email ?? 'info@company.com' }}<br><span>Business Email</span>
                                 </h6>
                             </div>
                         </div>
@@ -436,6 +475,12 @@
         </div>
     </div>
     <style>
+        .banner-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
         hr {
             border: none;
             height: 2px;

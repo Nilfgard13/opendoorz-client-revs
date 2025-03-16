@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class DashboardController extends Controller
+class DashboardStaffController extends Controller
 {
     public function countProperties()
     {
@@ -24,7 +24,7 @@ class DashboardController extends Controller
 
         $title = "Dashboard Admin";
 
-        return view('admin.home', compact('propertyCounts', 'title', 'landingPage'));
+        return view('adminStaff.homeAdmin', compact('propertyCounts', 'title', 'landingPage'));
     }
 
     public function insertLandingPage(Request $request)
@@ -96,6 +96,6 @@ class DashboardController extends Controller
 
         // dd($request->number);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Landing Page inserted successfully');
+        return redirect()->route('adminStaff.dashboard')->with('success', 'Landing Page inserted successfully');
     }
 }

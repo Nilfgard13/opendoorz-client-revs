@@ -47,14 +47,6 @@
                             <span class="hide-menu">Data Management</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/user-admin" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-user-plus"></i>
-                                </span>
-                                <span class="hide-menu">User Management</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/property-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-building-estate"></i>
@@ -62,44 +54,13 @@
                                 <span class="hide-menu">Property Management</span>
                             </a>
                         </li>
-                        {{-- <li class="sidebar-item">
-                            <a class="sidebar-link" href="/category-admin" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-category"></i>
-                                </span>
-                                <span class="hide-menu">Type Management</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/category-location-admin" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-location"></i>
-                                </span>
-                                <span class="hide-menu">Location Management</span>
-                            </a>
-                        </li> --}}
+                    
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin-admin" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-brand-whatsapp"></i>
                                 </span>
                                 <span class="hide-menu">Admin Management</span>
-                            </a>
-                        </li>
-                        {{-- <li class="sidebar-item">
-                            <a class="sidebar-link" href="/blog-admin" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-article"></i>
-                                </span>
-                                <span class="hide-menu">Blog Management</span>
-                            </a>
-                        </li> --}}
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/review-admin" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-message"></i>
-                                </span>
-                                <span class="hide-menu">Review Management</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">

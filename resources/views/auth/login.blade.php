@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
-    <link rel="shortcut icon" type="image/png" href="admin/assets/images/logos/favicon.png" />
+    <title>Login Page</title>
+    <link rel="shortcut icon" type="image/png"
+        href="{{ asset('admin/assets/images/logos/Artboard 11 copy 4@300x.png') }}" />
     <link rel="stylesheet" href="admin/assets/css/styles.min.css" />
 </head>
 
@@ -18,38 +19,48 @@
             <div class="d-flex align-items-center justify-content-center w-100">
                 <div class="row justify-content-center w-100">
                     <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0">
+                        <div class="card mb-0" style="background-color: #f4efef85;">
                             <div class="card-body">
-                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="admin/assets/images/logos/dark-logo.svg" width="180" alt="">
+                                <a href="/ors-login" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                    <img src="{{ asset('admin/assets/images/logos/Artboard 11 copy 4@300x.png') }}"
+                                        width="180" alt="">
                                 </a>
-                                <p class="text-center">Your Social Campaigns</p>
-                                <form>
+                                <h2 class="text-center">Opendoorz Login</h2><br>
+                                {{-- <p class="text-center">Your Social Campaigns</p> --}}
+                                <form action="{{ route('login.auth') }}" method="POST">
+                                    @csrf
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Username</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            aria-describedby="emailHelp" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            required>
                                     </div>
-                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                    {{-- <div class="d-flex align-items-center justify-content-between mb-4">
                                         <div class="form-check">
-                                            <input class="form-check-input primary" type="checkbox" value=""
-                                                id="flexCheckChecked" checked>
-                                            <label class="form-check-label text-dark" for="flexCheckChecked">
-                                                Remeber this Device
+                                            <input class="form-check-input primary" type="checkbox" name="remember"
+                                                id="remember">
+                                            <label class="form-check-label text-dark" for="remember">
+                                                Remember this Device
                                             </label>
                                         </div>
-                                        <a class="text-primary fw-bold" href="./index.html">Forgot Password ?</a>
-                                    </div>
-                                    <a href="/ors-register" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign
-                                        In</a>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-4 mb-0 fw-bold">New to Modernize?</p>
-                                        <a class="text-primary fw-bold ms-2" href="/ors-register">Create an account</a>
-                                    </div>
+                                        <a class="text-primary fw-bold" href="{{ route('password.request') }}">Forgot
+                                            Password?</a>
+                                    </div> --}}
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign
+                                        In</button>
                                 </form>
                             </div>
                         </div>
