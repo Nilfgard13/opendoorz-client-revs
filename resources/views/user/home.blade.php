@@ -325,10 +325,14 @@
                                 <img src="{{ $imageSrc }}" alt="Property Image" width="350" height="260">
                             </a>
                             <span class="category">{{ $user->categoryType->name }}</span>
-                            <h6>Rp. {{ number_format($user->price, 2) }}</h6>
+
+                            {{-- <h6>Rp. {{ number_format($user->price, 2) }}</h6> --}}
+                            <h6 class="price-format" data-price="{{ $user->price }}">Rp.
+                                {{ number_format($user->price, 2) }}</h6>
                             <h4>
                                 <a href="{{ route('user.show', $user->id) }}">{{ $user->title }}</a>
                             </h4>
+
                             <ul>
                                 <li>Kamar tidur: <span>{{ $user->bedrooms }}</span></li>
                                 <li>Kamar mandi: <span>{{ $user->bathrooms }}</span></li>
@@ -492,5 +496,36 @@
             margin: 20px 0;
         }
     </style>
+
+    <script>
+        // Fungsi untuk memformat angka menjadi format currency yang lebih mudah dibaca
+        function formatCurrency(amount) {
+            // Jika angka lebih dari atau sama dengan 1 milyar (9 nol)
+            if (amount >= 1000000000) {
+                return 'Rp. ' + (amount / 1000000000).toFixed(1) + 'M';
+            }
+            // Jika angka lebih dari atau sama dengan 1 juta (6 nol)
+            else if (amount >= 1000000) {
+                return 'Rp. ' + (amount / 1000000).toFixed(0) + 'Jt';
+            }
+            // Untuk angka di bawah 1 juta
+            else {
+                return 'Rp. ' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+        }
+
+        // Contoh penggunaan:
+        // Untuk elemen dengan class 'price-format'
+        document.addEventListener('DOMContentLoaded', function() {
+            const priceElements = document.querySelectorAll('.price-format');
+
+            priceElements.forEach(function(element) {
+                const originalPrice = parseFloat(element.getAttribute('data-price'));
+                if (!isNaN(originalPrice)) {
+                    element.textContent = formatCurrency(originalPrice);
+                }
+            });
+        });
+    </script>
 
 </x-layout_user>
