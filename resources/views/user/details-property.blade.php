@@ -97,8 +97,9 @@
                         <h4>{{ $property->title }}<br>
                             <p>{{ $property->address }}, {{ $property->categoryLocation->name }}</p>
                         </h4>
-                        <p>{!! nl2br($property->description) !!}
-                        </p>
+                        <div class="container" style="max-width: 800px; word-wrap: break-word; padding: 16px;">
+                            <p>{!! nl2br($property->description) !!}</p>
+                        </div>
                     </div>
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
@@ -227,6 +228,10 @@
         </div>
 
     </div>
+
+    <x-slot:email>{{ $landingPage->email }}</x-slot:email>
+    <x-slot:address>{{ $landingPage->address }}</x-slot:address>
+    <x-slot:number>{{ $landingPage->number }}</x-slot:number>
 
     {{-- <div class="section best-deal">
         <div class="container">

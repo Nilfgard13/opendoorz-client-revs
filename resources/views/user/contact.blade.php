@@ -99,7 +99,8 @@
                             <div class="item email">
                                 <img src="user/assets/images/icons8-email-100.png" alt=""
                                     style="max-width: 52px;">
-                                <h6 style="font-size: 13pt">{{ $landingPage->email ?? 'info@company.com' }}<br><span>Business Email</span>
+                                <h6 style="font-size: 13pt">
+                                    {{ $landingPage->email ?? 'info@company.com' }}<br><span>Business Email</span>
                                 </h6>
                             </div>
                         </div>
@@ -190,4 +191,9 @@
             </div>
         </div>
     </div>
+
+    <x-slot:email>{{ $landingPage->email }}</x-slot:email>
+    <x-slot:address>{{ $landingPage->address }}</x-slot:address>
+    <x-slot:number>{{ $landingPage->number }}</x-slot:number>
+
 </x-layout_user>

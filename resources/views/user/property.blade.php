@@ -234,6 +234,11 @@
 
         </div>
     </div>
+
+    <x-slot:email>{{ $landingPage->email }}</x-slot:email>
+    <x-slot:address>{{ $landingPage->address }}</x-slot:address>
+    <x-slot:number>{{ $landingPage->number }}</x-slot:number>
+
     <style>
         .pagination-wrapper {
             display: flex;

@@ -177,13 +177,12 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Tim dan pengalaman kami?
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     Tim kami terdiri dari <strong>profesional real estate dengan pengalaman
                                         bertahun-tahun</strong> dalam
@@ -474,6 +473,11 @@
             </div>
         </div>
     </div>
+
+    <x-slot:email>{{ $landingPage->email }}</x-slot:email>
+    <x-slot:address>{{ $landingPage->address }}</x-slot:address>
+    <x-slot:number>{{ $landingPage->number }}</x-slot:number>
+
     <style>
         .banner-img {
             width: 100%;
@@ -488,4 +492,5 @@
             margin: 20px 0;
         }
     </style>
+
 </x-layout_user>

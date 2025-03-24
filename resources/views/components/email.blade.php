@@ -1,0 +1,1 @@
+<a href="mailto:{{ $slot }}?subject=Halo&body=Halo, saya ingin bertanya tentang...">{{ $slot }}</a>

@@ -35,12 +35,68 @@ https://templatemo.com/tm-591-villa-agency
     {{-- content --}}
     {{ $slot }}
 
-    <footer>
+    {{-- <footer>
         <div class="container">
-            <div class="col-lg-8">
+            <div class="col-lg-6">
                 <p>Copyright © 2048 Villa Agency Co., Ltd. All rights reserved.
+                    Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                </p>
+            </div>
+        </div>
+    </footer> --}}
 
-                    Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+    <footer class="bg-dark py-5">
+        <div class="container">
+            <div class="row mb-4">
+                <!-- Contact Info -->
+                <h2 class="text-white mb-5">Opendoorz Real Estate</h2>
+                <div class="col-md-4 mb-4">
+                    <h3 class="h5 text-white mb-3">Contact Us</h3>
+                    <address class="text-light mb-0">
+                        <x-email>{{ $email }}</x-email>
+                        <x-address>{{ $address }}</x-address>
+                        <x-phone-number>{{ $number }}</x-phone-number>
+                    </address>
+                </div>
+
+                <!-- Category Writing -->
+                <div class="col-md-4 mb-4">
+                    <h3 class="h5 text-white mb-3">Category Writing</h3>
+                    <ul class="list-unstyled text-light">
+                        <li class="mb-2">
+                            <a href="#" class="text-light">Real Estate</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light">Properti</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light">Perumahan</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Links -->
+                <div class="col-md-4 mb-4">
+                    <h3 class="h5 text-white mb-3">Link Page</h3>
+                    <ul class="list-unstyled text-light">
+                        <li class="mb-2">
+                            <a href="/" class="text-light">Home</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/property" class="text-light">Properti</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/contact" class="text-light">Kontak Kami</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Social Media and Copyright -->
+            <div class="border-top border-secondary pt-4">
+                <p>Copyright © 2048 Villa Agency Co., Ltd. All rights reserved.
+                    Design: <a rel="nofollow" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                </p>    
             </div>
         </div>
     </footer>
